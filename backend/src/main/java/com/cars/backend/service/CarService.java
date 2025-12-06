@@ -1,13 +1,18 @@
 package com.cars.backend.service;
 
 import com.cars.backend.entity.Car;
+import com.cars.backend.repository.CarRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CarService {
 
+    @Autowired
+    private CarRepository carRepository;
+
     public String save(Car car) {
-        //TODO
+        this.carRepository.save(car);
         return "Car saved!";
     }
 

@@ -1,6 +1,17 @@
 package com.cars.backend.entity;
 
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+
+
 public class Car {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
     private String brand;
@@ -16,6 +27,14 @@ public class Car {
         this.brand = brand;
         this.model = model;
         this.manufactureYear = manufactureYear;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
