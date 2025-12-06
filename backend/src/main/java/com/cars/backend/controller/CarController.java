@@ -14,7 +14,7 @@ public class CarController {
     private CarService carService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable int id) {
+    public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
             Car car = this.carService.findById(id);
             return ResponseEntity.ok(car);

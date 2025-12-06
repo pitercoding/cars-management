@@ -5,6 +5,8 @@ import com.cars.backend.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CarService {
 
@@ -16,17 +18,9 @@ public class CarService {
         return "Car saved!";
     }
 
-    public Car findById(int id) {
-        //TODO
-        if (id == 1) {
-            Car car = new Car();
-            car.setName("Fusca");
-            car.setBrand("Volkswagen");
-            car.setModel("Volkswagen Typ 1");
-            car.setManufactureYear(2010);
-            return car;
-        } else {
-            throw new RuntimeException("Car not found with id: " + id);
-        }
+    public Car findById(Long id) {
+        return carRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Car not found with id: " + id));
     }
+
 }
