@@ -1,12 +1,12 @@
 package com.cars.backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.util.List;
+
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -17,17 +17,14 @@ public class Car {
     private Long id;
 
     private String name;
-    private String brand;
     private String model;
     private int manufactureYear;
 
-    public Car() {
-    }
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "brand_id") // FK
+    private Brand brand;
 
-    public Car(String name, String brand, String model, int manufactureYear) {
-        this.name = name;
-        this.brand = brand;
-        this.model = model;
-        this.manufactureYear = manufactureYear;
-    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "car_carOwner")
+    private List<CarOwner> carOwners;
 }
