@@ -2,7 +2,6 @@ package com.cars.backend.controller;
 
 import com.cars.backend.entity.Car;
 import com.cars.backend.service.CarService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,35 +11,40 @@ import java.util.List;
 @RequestMapping("/cars")
 public class CarController {
 
-    @Autowired
     private CarService carService;
 
-    // ========== LIST ALL ========== //
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
+
+    // ========== CREATE ========== //
+    @PostMapping
+    public Car postCar(@RequestBody Car car) {
+        return carService.postCar(car);
+    }
+
+    // ========== READ ========== //
     @GetMapping
     public List<Car> getAllCars() {
         return carService.getAllCars();
     }
 
-    // ========== GET BY ID ========== //
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCarById(@PathVariable Long id) {
-        try {
-            Car car = carService.getCarById(id);
-            return ResponseEntity.ok(car);
-        } catch (Exception e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
+    public Car getCarById(@PathVariable Long id) {
+        return carService.getCarById(id);
     }
 
-    // ========== REGISTER NEW CAR ========== //
-    @PostMapping
-    public ResponseEntity<?> postCar(@RequestBody Car car) {
-        try {
-            String message = carService.postCar(car);
-            return ResponseEntity.ok(message);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    // ========== UPDATE ========== //
+    @PutMapping("/{id}")
+    public Car updateCar(@PathVariable Long id, @RequestBody Car car) {
+        return carService.updateCar(car, id);
+    }
+
+    // ========== DELETE ========== //
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
+        carService.deleteCar(id);
+        return ResponseEntity.noContent().build();
     }
 }
 
