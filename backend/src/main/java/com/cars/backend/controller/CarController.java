@@ -29,6 +29,27 @@ public class CarController {
         return carService.getAllCars();
     }
 
+    // AUTOMATICALLY DERIVED QUERY
+    @GetMapping("/findByName")
+    public ResponseEntity<List<Car>> findByNome(@RequestParam String name) {
+        List<Car> carNameList = carService.findByName(name);
+        return ResponseEntity.ok(carNameList);
+    }
+
+    // AUTOMATICALLY DERIVED QUERY
+    @GetMapping("/findByBrand")
+    public ResponseEntity<List<Car>> findByBrandId(@RequestParam Long brandId) {
+        List<Car> carBrandList = carService.findByBrandId(brandId);
+        return ResponseEntity.ok(carBrandList);
+    }
+
+    // AUTOMATICALLY DERIVED QUERY
+    @GetMapping("/findByManufactureYearGreaterThan")
+    public ResponseEntity<List<Car>> findByManufactureYearGreaterThan(@RequestParam int manufactureYear) {
+        List<Car> carManufactureYear = carService.findByManufactureYearGreaterThan(manufactureYear);
+        return ResponseEntity.ok(carManufactureYear);
+    }
+
     @GetMapping("/{id}")
     public Car getCarById(@PathVariable Long id) {
         return carService.getCarById(id);
@@ -46,5 +67,6 @@ public class CarController {
         carService.deleteCar(id);
         return ResponseEntity.noContent().build();
     }
+
 }
 

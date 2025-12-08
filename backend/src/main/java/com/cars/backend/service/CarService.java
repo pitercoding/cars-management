@@ -47,4 +47,17 @@ public class CarService {
         Car existing = getCarById(id);
         carRepository.delete(existing);
     }
+
+    // ========== AUTOMATICALLY DERIVED QUERIES ========== //
+    public List<Car> findByName(String name){
+        return carRepository.findByName(name);
+    }
+
+    public List<Car> findByBrandId(Long brandId){
+        return carRepository.findByBrandId(brandId);
+    }
+
+    public List<Car> findByManufactureYearGreaterThan(int manufactureYear){
+        return carRepository.findByManufactureYearGreaterThan(manufactureYear);
+    }
 }
