@@ -21,10 +21,10 @@ class CarServiceTest {
     @Autowired
     private CarRepository carRepository;
 
-    @BeforeEach
-    void setUp() {
-        carRepository.deleteAll(); // clear enviroment
-    }
+//    @BeforeEach
+//    void setUp() {
+//        carRepository.deleteAll();
+//    }
 
     @Test
     void testPostCar_ValidCar() {
