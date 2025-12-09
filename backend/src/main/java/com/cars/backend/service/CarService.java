@@ -15,8 +15,35 @@ public class CarService {
         this.carRepository = carRepository;
     }
 
+
+    /**
+     * Validates business rules for Car entities.
+     *
+     * Ensures mandatory fields are present and applies
+     * domain-specific constraints, such as preventing
+     * Jeep Compass models from having manufacture years earlier than 2006.
+     *
+     * @param name the car's name
+     * @param manufactureYear the year the car was manufactured
+     * @return true if validation passes
+     * @throws IllegalArgumentException if any business rule is violated
+     */
+    public boolean checkCarData(String name, int manufactureYear) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Car name cannot be null or empty.");
+        }
+
+        if ("Jeep Compass".equals(name) && manufactureYear < 2006) {
+            throw new IllegalArgumentException(
+                    "Jeep Compass cannot have a manufacture year earlier than 2006."
+            );
+        }
+        return true;
+    }
+
     // ========== CREATE ========== //
     public Car postCar(Car car) {
+        checkCarData(car.getName(), car.getManufactureYear());
         return carRepository.save(car);
     }
 
@@ -32,6 +59,7 @@ public class CarService {
 
     // ========== UPDATE ========== //
     public Car updateCar(Car car, Long id) {
+        checkCarData(car.getName(), car.getManufactureYear());
         Car existing = getCarById(id);
 
         existing.setName(car.getName());
