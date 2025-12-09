@@ -23,4 +23,12 @@ public class Brand {
     @JsonIgnore
     @OneToMany(mappedBy = "brand")
     private List<Car> cars;
+
+    // =============================
+    // Constructor for testing only
+    // =============================
+    public Brand(String name, String taxIdentificationNumber) {
+        this.name = name;
+        this.taxIdentificationNumber = taxIdentificationNumber;
+    }
 }
