@@ -1,4 +1,22 @@
-<p>cars-list works!</p>
-<p>cars-list works!</p>
-<p>cars-list works!</p>
+<table class="mytable" border="1">
+
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Brand</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    @for (car of list; track $index) {
+      <tr>
+        <td>{{ car.name }}</td>
+        <td>{{ car.brand }}</td>
+      </tr>
+    }
+
+  </tbody>
+
+</table>
 
