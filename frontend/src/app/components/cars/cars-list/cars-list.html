@@ -28,7 +28,7 @@
                   <td>{{ car.name }}</td>
                   <td class="toright">
                     <button type="button" class="btn btn-primary btn-rounded" mdRipple routerLink="/admin/cars/edit/{{car.id}}">Edit</button>
-                    <button type="button" class="btn btn-danger btn-rounded" mdRipple (click)="deleteCar()">Delete</button>
+                    <button type="button" class="btn btn-danger btn-rounded" mdRipple (click)="deleteById(car)">Delete</button>
                   </td>
                 </tr>
               }

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Car } from '../../../models/car';
+import { ActivatedRoute, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cars-details',
@@ -10,10 +13,38 @@ import { Car } from '../../../models/car';
   styleUrl: './cars-details.scss',
 })
 export class CarsDetails {
+  car: Car = new Car(0, '');
+  router = inject(ActivatedRoute);
+  router2 = inject(Router);
 
-  car: Car = new Car(0, "");
+  constructor() {
+    let id = this.router.snapshot.params['id'];
+    if (id > 0) {
+      this.findById(id);
+    }
+  }
+
+  findById(id: number) {
+    //busca backend
+    let carReturned: Car = new Car(id, 'Jeep');
+    this.car = carReturned;
+  }
 
   saveChanges() {
-    alert('Saved successfully!')
+    if (this.car.id > 0) {
+      Swal.fire({
+        title: 'Successfully edited!',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      });
+      this.router2.navigate(['admin/cars'], { state: { carEdited: this.car } });
+    } else {
+      Swal.fire({
+        title: 'Saved successfully!',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      });
+      this.router2.navigate(['admin/cars'], { state: { carNew: this.car } });
+    }
   }
 }
