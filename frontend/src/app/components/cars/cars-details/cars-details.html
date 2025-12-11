@@ -1,1 +1,23 @@
-<p>cars-details works!</p>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4"></div>
+
+    <div class="col-lg-4 tocenter totop">
+      <div class="card">
+        <div class="card-body">
+          <h3>New Car</h3>
+          <br>
+          <mdb-form-control>
+            <input mdbInput type="text" id="user" class="form-control" [(ngModel)]="car.name" />
+            <label mdbLabel class="form-label" for="user">Name</label>
+          </mdb-form-control>
+          <br />
+          <button type="button" class="btn btn-primary btn-rounded" mdRipple (click)="saveChanges()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4"></div>
+  </div>
+</div>

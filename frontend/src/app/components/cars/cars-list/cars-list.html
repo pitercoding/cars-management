@@ -1,1 +1,44 @@
-<p>cars-list works!</p>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card">
+        <div class="card-body">
+
+          <h3>Cars List</h3>
+
+          <div class="toright">
+            <button type="button" class="btn btn-primary btn-rounded" mdRipple routerLink="/admin/cars/new">New</button>
+          </div>
+          <br>
+
+          <table border="1" class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (car of list; track $index) {
+                <tr>
+                  <td>{{ car.id }}</td>
+                  <td>{{ car.name }}</td>
+                  <td class="toright">
+                    <button type="button" class="btn btn-primary btn-rounded" mdRipple routerLink="/admin/cars/edit/{{car.id}}">Edit</button>
+                    <button type="button" class="btn btn-danger btn-rounded" mdRipple (click)="deleteCar()">Delete</button>
+                  </td>
+                </tr>
+              }
+
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
