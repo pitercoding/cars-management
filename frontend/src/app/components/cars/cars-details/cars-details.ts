@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Car } from '../../../models/car';
@@ -13,7 +13,8 @@ import Swal from 'sweetalert2';
   styleUrl: './cars-details.scss',
 })
 export class CarsDetails {
-  car: Car = new Car(0, '');
+  @Input("car") car: Car = new Car(0, "");
+  @Output("return") return = new EventEmitter<any>();
   router = inject(ActivatedRoute);
   router2 = inject(Router);
 
@@ -46,5 +47,6 @@ export class CarsDetails {
       });
       this.router2.navigate(['admin/cars'], { state: { carNew: this.car } });
     }
+    this.return.emit(this.car);
   }
 }
