@@ -1,3 +1,4 @@
+import { CarService } from './../../../services/car.service';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
@@ -13,40 +14,48 @@ import Swal from 'sweetalert2';
   styleUrl: './cars-details.scss',
 })
 export class CarsDetails {
-  @Input("car") car: Car = new Car(0, "");
-  @Output("return") return = new EventEmitter<any>();
-  router = inject(ActivatedRoute);
-  router2 = inject(Router);
+  @Input() car: Car = new Car(0, '');
+  @Output() return = new EventEmitter<Car>();
 
-  constructor() {
-    let id = this.router.snapshot.params['id'];
-    if (id > 0) {
-      this.findById(id);
-    }
-  }
+  carService = inject(CarService);
 
-  findById(id: number) {
-    //busca backend
-    let carReturned: Car = new Car(id, 'Jeep');
-    this.car = carReturned;
-  }
-
-  saveChanges() {
+  saveCar() {
     if (this.car.id > 0) {
-      Swal.fire({
-        title: 'Successfully edited!',
-        icon: 'success',
-        confirmButtonText: 'Ok'
+      this.carService.updateCar(this.car, this.car.id).subscribe({
+        next: () => {
+          Swal.fire({
+            title: 'Successfully edited!',
+            icon: 'success',
+            confirmButtonText: 'Ok',
+          });
+          this.return.emit(this.car);
+        },
+        error: () => {
+          Swal.fire({
+            title: 'Failed to update this car.',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
+        },
       });
-      this.router2.navigate(['admin/cars'], { state: { carEdited: this.car } });
     } else {
-      Swal.fire({
-        title: 'Saved successfully!',
-        icon: 'success',
-        confirmButtonText: 'Ok'
+      this.carService.postCar(this.car).subscribe({
+        next: () => {
+          Swal.fire({
+            title: 'Saved successfully!',
+            icon: 'success',
+            confirmButtonText: 'Ok',
+          });
+          this.return.emit(this.car);
+        },
+        error: () => {
+          Swal.fire({
+            title: 'Failed to save this car.',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
+        },
       });
-      this.router2.navigate(['admin/cars'], { state: { carNew: this.car } });
     }
-    this.return.emit(this.car);
   }
 }

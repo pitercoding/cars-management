@@ -109,16 +109,7 @@ export class CarsList {
   }
 
   returnDetails(car: Car) {
-    if (car.id > 0) {
-      let index = this.list.findIndex((x) => {
-        return x.id == car.id;
-      });
-      this.list[index] = car;
-    } else {
-      car.id = 55;
-      this.list.push(car);
-    }
-
+    this.getAllCars();
     this.modalRef.close();
   }
 }
