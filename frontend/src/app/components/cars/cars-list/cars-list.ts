@@ -8,6 +8,7 @@ import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { CarsDetails } from '../cars-details/cars-details';
+import { CarService } from '../../../services/car.service';
 
 @Component({
   selector: 'app-cars-list',
@@ -31,13 +32,10 @@ export class CarsList {
   modalRef!: MdbModalRef<any>;
 
   private modalService = inject(MdbModalService);
+  carService = inject(CarService);
 
   constructor() {
-    const car1: Car = { id: 1, name: 'Fiesta' };
-    const car2: Car = { id: 2, name: 'Uno' };
-    const car3: Car = { id: 3, name: 'Monza' };
-
-    this.list.push(car1, car2, car3);
+    this.getAllCars();
 
     let carNew = history.state.carNew;
     let carEdited = history.state.carEdited;
@@ -51,6 +49,17 @@ export class CarsList {
       let index = this.list.findIndex((x) => x.id === carEdited.id);
       if (index >= 0) this.list[index] = carEdited;
     }
+  }
+
+  getAllCars(){
+    this.carService.getAllCars().subscribe({
+      next: carList => { // Success
+        this.list = carList;
+      },
+      error: err => { // Fail
+        alert('Failed to retrieve the car list.');
+      }
+    });
   }
 
   deleteById(car: Car) {
