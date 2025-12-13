@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cars")
+@RequestMapping("/api/cars")
 public class CarController {
 
     private CarService carService;
@@ -18,20 +18,20 @@ public class CarController {
     }
 
     // ========== CREATE ========== //
-    @PostMapping
+    @PostMapping("/postCar")
     public Car postCar(@RequestBody Car car) {
         return carService.postCar(car);
     }
 
     // ========== READ ========== //
-    @GetMapping
+    @GetMapping("/getAllCars")
     public List<Car> getAllCars() {
         return carService.getAllCars();
     }
 
     // AUTOMATICALLY DERIVED QUERY
     @GetMapping("/findByName")
-    public ResponseEntity<List<Car>> findByNome(@RequestParam String name) {
+    public ResponseEntity<List<Car>> findByName(@RequestParam String name) {
         List<Car> carNameList = carService.findByName(name);
         return ResponseEntity.ok(carNameList);
     }
@@ -50,19 +50,19 @@ public class CarController {
         return ResponseEntity.ok(carManufactureYear);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getCarById/{id}")
     public Car getCarById(@PathVariable Long id) {
         return carService.getCarById(id);
     }
 
     // ========== UPDATE ========== //
-    @PutMapping("/{id}")
+    @PutMapping("/updateCar/{id}")
     public Car updateCar(@PathVariable Long id, @RequestBody Car car) {
         return carService.updateCar(car, id);
     }
 
     // ========== DELETE ========== //
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteCar/{id}")
     public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
         carService.deleteCar(id);
         return ResponseEntity.noContent().build();

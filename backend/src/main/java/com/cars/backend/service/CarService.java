@@ -18,12 +18,12 @@ public class CarService {
 
     /**
      * Validates business rules for Car entities.
-     *
+     * <p>
      * Ensures mandatory fields are present and applies
      * domain-specific constraints, such as preventing
      * Jeep Compass models from having manufacture years earlier than 2006.
      *
-     * @param name the car's name
+     * @param name            the car's name
      * @param manufactureYear the year the car was manufactured
      * @return true if validation passes
      * @throws IllegalArgumentException if any business rule is violated
@@ -67,6 +67,13 @@ public class CarService {
         existing.setModel(car.getModel());
         existing.setManufactureYear(car.getManufactureYear());
 
+        // WARNING:
+        // This update strategy allows creating new CarOwner records
+        // if the request body contains owners without an ID.
+        // This will be refactored in the future using DTOs
+        // and explicit association handling.
+        existing.setCarOwners(car.getCarOwners());
+
         return carRepository.save(existing);
     }
 
@@ -77,15 +84,15 @@ public class CarService {
     }
 
     // ========== AUTOMATICALLY DERIVED QUERIES ========== //
-    public List<Car> findByName(String name){
+    public List<Car> findByName(String name) {
         return carRepository.findByName(name);
     }
 
-    public List<Car> findByBrandId(Long brandId){
+    public List<Car> findByBrandId(Long brandId) {
         return carRepository.findByBrandId(brandId);
     }
 
-    public List<Car> findByManufactureYearGreaterThan(int manufactureYear){
+    public List<Car> findByManufactureYearGreaterThan(int manufactureYear) {
         return carRepository.findByManufactureYearGreaterThan(manufactureYear);
     }
 }
