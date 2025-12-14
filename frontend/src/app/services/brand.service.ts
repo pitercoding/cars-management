@@ -7,29 +7,26 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class BrandService {
-  http = inject(HttpClient);
-
+  private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8080/api/brands';
-
-  constructor() {}
 
   getAllBrands(): Observable<Brand[]> {
     return this.http.get<Brand[]>(`${this.apiUrl}/getAllBrands`);
+  }
+
+  getBrandById(id: number): Observable<Brand> {
+    return this.http.get<Brand>(`${this.apiUrl}/getBrandById/${id}`);
   }
 
   postBrand(brand: Brand): Observable<Brand> {
     return this.http.post<Brand>(`${this.apiUrl}/postBrand`, brand);
   }
 
-  updateBrand(brand: Brand, id: number): Observable<Brand> {
+  updateBrand(id: number, brand: Brand): Observable<Brand> {
     return this.http.put<Brand>(`${this.apiUrl}/updateBrand/${id}`, brand);
   }
 
   deleteBrand(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/deleteBrand/${id}`);
   }
-
-  getBrandById(id: number): Observable<Brand> {
-      return this.http.get<Brand>(`${this.apiUrl}/getBrandById/${id}`);
-    }
 }
