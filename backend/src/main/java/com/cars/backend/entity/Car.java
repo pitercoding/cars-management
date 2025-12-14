@@ -16,12 +16,16 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String model;
+
     private int manufactureYear;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "brand_id") // FK
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false) // FK
     private Brand brand;
 
     @ManyToMany(cascade = CascadeType.ALL)

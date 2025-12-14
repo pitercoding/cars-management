@@ -2,6 +2,7 @@ package com.cars.backend.controller;
 
 import com.cars.backend.entity.Car;
 import com.cars.backend.service.CarService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +21,8 @@ public class CarController {
 
     // ========== CREATE ========== //
     @PostMapping("/postCar")
-    public Car postCar(@RequestBody Car car) {
-        return carService.postCar(car);
+    public ResponseEntity<Car> postCar(@RequestBody Car car) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(carService.postCar(car));
     }
 
     // ========== READ ========== //

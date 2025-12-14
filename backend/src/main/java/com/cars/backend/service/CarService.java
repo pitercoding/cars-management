@@ -2,6 +2,7 @@ package com.cars.backend.service;
 
 import com.cars.backend.entity.Car;
 import com.cars.backend.repository.CarRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 @Service
 public class CarService {
 
-    private CarRepository carRepository;
+    private final CarRepository carRepository;
 
     public CarService(CarRepository carRepository) {
         this.carRepository = carRepository;
@@ -18,11 +19,9 @@ public class CarService {
 
     /**
      * Validates business rules for Car entities.
-     * <p>
      * Ensures mandatory fields are present and applies
      * domain-specific constraints, such as preventing
      * Jeep Compass models from having manufacture years earlier than 2006.
-     *
      * @param name            the car's name
      * @param manufactureYear the year the car was manufactured
      * @return true if validation passes
@@ -54,7 +53,7 @@ public class CarService {
 
     public Car getCarById(Long id) {
         return carRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Car not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Car not found with id: " + id));
     }
 
     // ========== UPDATE ========== //
