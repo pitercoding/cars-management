@@ -22,7 +22,7 @@
               </tr>
             </thead>
             <tbody>
-              @for (car of list; track $index) {
+              @for (car of list; track car.id) {
               <tr>
                 <td>{{ car.id }}</td>
                 <td>{{ car.name }}</td>

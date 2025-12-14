@@ -36,19 +36,6 @@ export class CarsList {
 
   constructor() {
     this.getAllCars();
-
-    let carNew = history.state.carNew;
-    let carEdited = history.state.carEdited;
-
-    if (carNew) {
-      carNew.id = 555;
-      this.list.push(carNew);
-    }
-
-    if (carEdited) {
-      let index = this.list.findIndex((x) => x.id === carEdited.id);
-      if (index >= 0) this.list[index] = carEdited;
-    }
   }
 
   getAllCars() {

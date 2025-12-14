@@ -3,12 +3,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Car } from '../../../models/car';
-import { ActivatedRoute, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cars-details',
+  standalone: true,
   imports: [MdbFormsModule, FormsModule],
   templateUrl: './cars-details.html',
   styleUrl: './cars-details.scss',
