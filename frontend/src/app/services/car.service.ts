@@ -7,18 +7,19 @@ import { Car } from '../models/car';
   providedIn: 'root',
 })
 export class CarService {
-  http = inject(HttpClient);
-
+  private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8080/api/cars';
 
-  constructor() {}
-
   getAllCars(): Observable<Car[]> {
-    return this.http.get<Car[]>(this.apiUrl + '/getAllCars');
+    return this.http.get<Car[]>(`${this.apiUrl}/getAllCars`);
+  }
+
+  getCarById(id: number): Observable<Car> {
+    return this.http.get<Car>(`${this.apiUrl}/getCarById/${id}`);
   }
 
   postCar(car: Car): Observable<Car> {
-    return this.http.post<Car>(this.apiUrl + '/postCar', car);
+    return this.http.post<Car>(`${this.apiUrl}/postCar`, car);
   }
 
   updateCar(car: Car, id: number): Observable<Car> {
@@ -27,9 +28,5 @@ export class CarService {
 
   deleteCar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/deleteCar/${id}`);
-  }
-
-  getCarById(id: number): Observable<Car> {
-    return this.http.get<Car>(`${this.apiUrl}/getCarById/${id}`);
   }
 }

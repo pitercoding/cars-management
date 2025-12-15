@@ -42,8 +42,7 @@ export class BrandsList {
   getAllBrands(): void {
     this.brandService.getAllBrands().subscribe({
       next: (brands) => (this.list = brands),
-      error: () =>
-        Swal.fire('Failed to retrieve the brand list.', '', 'error'),
+      error: () => Swal.fire('Failed to retrieve the brand list.', '', 'error'),
     });
   }
 
@@ -71,8 +70,7 @@ export class BrandsList {
             this.list = this.list.filter((b) => b.id !== brand.id);
             Swal.fire('Successfully deleted!', '', 'success');
           },
-          error: () =>
-            Swal.fire('Failed to delete this brand.', '', 'error'),
+          error: () => Swal.fire('Failed to delete this brand.', '', 'error'),
         });
       }
     });

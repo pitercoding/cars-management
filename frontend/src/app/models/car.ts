@@ -1,9 +1,13 @@
-export class Car {
-  id!: number;
-  name!: string;
+import { Brand } from './brand';
 
-  constructor(id: number, name: string) {
-    this.id = id;
-    this.name = name;
+export class Car {
+  id?: number;
+  name: string = '';
+  model: string = '';
+  manufactureYear: number = new Date().getFullYear();
+  brand?: Brand;
+
+  constructor(init?: Partial<Car>) {
+    Object.assign(this, init);
   }
 }

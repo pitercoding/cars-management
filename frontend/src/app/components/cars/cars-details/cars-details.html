@@ -1,21 +1,64 @@
-<br>
+<br />
 <div class="container">
   <div class="row">
-
     <div class="col-lg-12 tocenter totop">
       <div class="card">
         <div class="card-body">
-          <h3>New Car</h3>
-          <br>
-          <mdb-form-control>
-            <input mdbInput type="text" id="user" class="form-control" [(ngModel)]="car.name" />
-            <label mdbLabel class="form-label" for="user">Name</label>
-          </mdb-form-control>
+          <h3>{{ car.id ? 'Edit Car' : 'New Car' }}</h3>
           <br />
-          <button type="button" class="btn btn-primary btn-rounded" mdRipple (click)="saveCar()">Save</button>
+
+          <!-- Car Name -->
+          <mdb-form-control>
+            <input mdbInput type="text" id="carName" class="form-control" [(ngModel)]="car.name" />
+            <label mdbLabel class="form-label" for="carName">Name</label>
+          </mdb-form-control>
+
+          <br />
+
+          <!-- Model -->
+          <mdb-form-control>
+            <input mdbInput type="text" id="carModel" class="form-control" [(ngModel)]="car.model" />
+            <label mdbLabel class="form-label" for="carModel">Model</label>
+          </mdb-form-control>
+
+          <br />
+
+          <!-- Manufacture Year -->
+          <mdb-form-control>
+            <input
+              mdbInput
+              type="number"
+              id="manufactureYear"
+              class="form-control"
+              [(ngModel)]="car.manufactureYear"
+            />
+            <label mdbLabel class="form-label" for="manufactureYear">Manufacture Year</label>
+          </mdb-form-control>
+
+          <br />
+
+          <!-- Brand -->
+          <mdb-form-control>
+            <select
+              mdbInput
+              id="brand"
+              class="form-control"
+              [(ngModel)]="car.brand"
+              [compareWith]="compareBrand"
+            >
+              <option [ngValue]="null">Select a Brand</option>
+              <option *ngFor="let b of brands" [ngValue]="b">{{ b.name }}</option>
+            </select>
+            <label mdbLabel class="form-label" for="brand">Brand</label>
+          </mdb-form-control>
+
+          <br />
+
+          <button type="button" class="btn btn-primary btn-rounded" mdRipple (click)="saveCar()">
+            Save
+          </button>
         </div>
       </div>
     </div>
-
   </div>
 </div>
