@@ -13,20 +13,20 @@ import java.util.List;
 @CrossOrigin("http://localhost:4200")
 public class CarController {
 
-    private CarService carService;
+    private final CarService carService;
 
     public CarController(CarService carService) {
         this.carService = carService;
     }
 
     // ========== CREATE ========== //
-    @PostMapping("/postCar")
+    @PostMapping
     public ResponseEntity<Car> postCar(@RequestBody Car car) {
         return ResponseEntity.status(HttpStatus.CREATED).body(carService.postCar(car));
     }
 
     // ========== READ ========== //
-    @GetMapping("/getAllCars")
+    @GetMapping
     public List<Car> getAllCars() {
         return carService.getAllCars();
     }
@@ -52,19 +52,20 @@ public class CarController {
         return ResponseEntity.ok(carManufactureYear);
     }
 
-    @GetMapping("/getCarById/{id}")
+    // ========== READ by ID ========== //
+    @GetMapping("/{id}")
     public Car getCarById(@PathVariable Long id) {
         return carService.getCarById(id);
     }
 
     // ========== UPDATE ========== //
-    @PutMapping("/updateCar/{id}")
+    @PutMapping("/{id}")
     public Car updateCar(@PathVariable Long id, @RequestBody Car car) {
         return carService.updateCar(car, id);
     }
 
     // ========== DELETE ========== //
-    @DeleteMapping("/deleteCar/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
         carService.deleteCar(id);
         return ResponseEntity.noContent().build();

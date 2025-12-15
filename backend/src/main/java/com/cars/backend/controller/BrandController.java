@@ -20,7 +20,7 @@ public class BrandController {
     }
 
     // ========== CREATE ==========
-    @PostMapping("/postBrand")
+    @PostMapping
     public ResponseEntity<?> postBrand(@RequestBody Brand brand) {
         try {
             Brand savedBrand = brandService.postBrand(brand);
@@ -39,24 +39,24 @@ public class BrandController {
     }
 
     // ========== READ ==========
-    @GetMapping("/getAllBrands")
+    @GetMapping
     public List<Brand> getAllBrands() {
         return brandService.getAllBrands();
     }
 
-    @GetMapping("/getBrandById/{id}")
+    @GetMapping("/{id}")
     public Brand getBrandById(@PathVariable Long id) {
         return brandService.getBrandById(id);
     }
 
     // ========== UPDATE ==========
-    @PutMapping("/updateBrand/{id}")
+    @PutMapping("/{id}")
     public Brand updateBrand(@PathVariable Long id, @RequestBody Brand brand) {
         return brandService.updateBrand(brand, id);
     }
 
     // ========== DELETE ==========
-    @DeleteMapping("/deleteBrand/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
         brandService.deleteBrand(id);
         return ResponseEntity.noContent().build();

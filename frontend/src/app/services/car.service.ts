@@ -11,22 +11,22 @@ export class CarService {
   private apiUrl = 'http://localhost:8080/api/cars';
 
   getAllCars(): Observable<Car[]> {
-    return this.http.get<Car[]>(`${this.apiUrl}/getAllCars`);
+    return this.http.get<Car[]>(`${this.apiUrl}`);
   }
 
   getCarById(id: number): Observable<Car> {
-    return this.http.get<Car>(`${this.apiUrl}/getCarById/${id}`);
+    return this.http.get<Car>(`${this.apiUrl}/${id}`);
   }
 
   postCar(car: Car): Observable<Car> {
-    return this.http.post<Car>(`${this.apiUrl}/postCar`, car);
+    return this.http.post<Car>(`${this.apiUrl}`, car);
   }
 
-  updateCar(car: Car, id: number): Observable<Car> {
-    return this.http.put<Car>(`${this.apiUrl}/updateCar/${id}`, car);
+  updateCar(id: number, car: Car): Observable<Car> {
+    return this.http.put<Car>(`${this.apiUrl}/${id}`, car);
   }
 
   deleteCar(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/deleteCar/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
