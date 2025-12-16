@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -26,5 +27,5 @@ public class Accessory {
 
     @ManyToMany(mappedBy = "accessories", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Car> cars;
+    private List<Car> cars = new ArrayList<>();
 }

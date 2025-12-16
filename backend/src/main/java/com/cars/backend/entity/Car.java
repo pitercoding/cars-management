@@ -3,6 +3,7 @@ package com.cars.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -28,7 +29,15 @@ public class Car {
     @JoinColumn(name = "brand_id", nullable = false) // FK
     private Brand brand;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "car_carOwner")
     private List<CarOwner> carOwners;
+
+    @ManyToMany
+    @JoinTable(
+            name = "car_accessory",
+            joinColumns = @JoinColumn(name = "car_id"),
+            inverseJoinColumns = @JoinColumn(name = "accessory_id")
+    )
+    private List<Accessory> accessories = new ArrayList<>();
 }
