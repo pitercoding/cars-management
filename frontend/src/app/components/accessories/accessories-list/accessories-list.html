@@ -1,0 +1,66 @@
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h3>Accessories List</h3>
+
+          <div class="toright">
+            <button type="button" class="btn btn-primary btn-rounded" mdRipple (click)="new()">
+              New
+            </button>
+          </div>
+          <br />
+
+          <table border="1" class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (accessory of list; track accessory.id) {
+              <tr>
+                <td>{{ accessory.id }}</td>
+                <td>{{ accessory.name }}</td>
+                <td class="toright">
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-rounded"
+                    mdRipple
+                    (click)="edit(accessory)"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-rounded"
+                    mdRipple
+                    (click)="deleteById(accessory)"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalAccessoriesList>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add New Accessory</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+  </div>
+  <div class="modal-body">
+    <app-accessories-details [accessory]="accessoryEdit" (return)="returnDetails()"></app-accessories-details>
+  </div>
+</ng-template>
+

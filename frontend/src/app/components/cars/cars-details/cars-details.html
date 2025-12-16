@@ -54,6 +54,23 @@
 
           <br />
 
+          <!-- Accessory -->
+          <mdb-form-control>
+            <select
+              mdbInput
+              id="accessory"
+              class="form-control"
+              [(ngModel)]="car.accessories"
+              [compareWith]="compareAccessory"
+            >
+              <option [ngValue]="null">Select a Accessory</option>
+              <option *ngFor="let a of accessories" [ngValue]="a">{{ a.name }}</option>
+            </select>
+            <label mdbLabel class="form-label" for="accessory">Accessory</label>
+          </mdb-form-control>
+
+          <br />
+
           <button type="button" class="btn btn-primary btn-rounded" mdRipple (click)="saveCar()">
             Save
           </button>

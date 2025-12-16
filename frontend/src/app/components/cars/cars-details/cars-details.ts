@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { AccessoryService } from './../../../services/accessory.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import Swal from 'sweetalert2';
@@ -8,6 +18,7 @@ import { Brand } from '../../../models/brand';
 import { CarService } from '../../../services/car.service';
 import { BrandService } from '../../../services/brand.service';
 import { CommonModule } from '@angular/common';
+import { Accessory } from '../../../models/accessory';
 
 @Component({
   selector: 'app-cars-details',
@@ -22,16 +33,20 @@ export class CarsDetails implements OnInit, OnChanges {
 
   private carService = inject(CarService);
   private brandService = inject(BrandService);
+  private AccessoryService = inject(AccessoryService);
 
   brands: Brand[] = [];
+  accessories: Accessory[] = [];
 
   ngOnInit(): void {
     this.loadBrands();
+    this.loadAccessories();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['car'] && this.car) {
       this.loadBrands();
+      this.loadAccessories();
     }
   }
 
@@ -53,7 +68,23 @@ export class CarsDetails implements OnInit, OnChanges {
     });
   }
 
+  loadAccessories(): void {
+    this.AccessoryService.getAllAccessories().subscribe({
+      next: (list) => {
+        this.accessories = list.sort((a, b) => a.id! - b.id!);
+
+        if (this.car.accessories && this.car.accessories.length) {
+          this.car.accessories = this.car.accessories.map(
+            (acc) => this.accessories.find((a) => a.id === acc.id)!
+          );
+        }
+      },
+      error: () => Swal.fire('Failed to load accessories', '', 'error'),
+    });
+  }
+
   compareBrand = (b1: Brand, b2: Brand) => (b1 && b2 ? b1.id === b2.id : b1 === b2);
+  compareAccessory = (a1: Accessory, a2: Accessory) => (a1 && a2 ? a1.id === a2.id : a1 === a2);
 
   saveCar(): void {
     if (!this.car.brand?.id) {
