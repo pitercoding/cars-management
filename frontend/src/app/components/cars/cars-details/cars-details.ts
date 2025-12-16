@@ -39,6 +39,9 @@ export class CarsDetails implements OnInit, OnChanges {
   accessories: Accessory[] = [];
 
   ngOnInit(): void {
+    if (!this.car.accessories) {
+      this.car.accessories = [];
+    }
     this.loadBrands();
     this.loadAccessories();
   }
@@ -81,6 +84,40 @@ export class CarsDetails implements OnInit, OnChanges {
       },
       error: () => Swal.fire('Failed to load accessories', '', 'error'),
     });
+  }
+
+  /**
+   * Adiciona ou remove um acessório da lista do carro.
+   * @param accessory O acessório que foi clicado.
+   * @param event O evento de mudança do checkbox.
+   */
+  onAccessoryChange(accessory: Accessory, event: Event) {
+    const checkbox = event.target as HTMLInputElement;
+
+    if (checkbox.checked) {
+      // Adiciona o acessório se não estiver na lista
+      if (!this.isSelected(accessory)) {
+        this.car.accessories.push(accessory);
+      }
+    } else {
+      // Remove o acessório da lista
+      const index = this.car.accessories.findIndex(a => a.id === accessory.id);
+      if (index > -1) {
+        this.car.accessories.splice(index, 1);
+      }
+    }
+  }
+
+  /**
+   * Verifica se um acessório já está selecionado para o carro.
+   * Essencial para marcar os checkboxes corretamente ao editar um carro.
+   * @param accessory O acessório a ser verificado.
+   * @returns true se o acessório estiver selecionado, false caso contrário.
+   */
+  isSelected(accessory: Accessory): boolean {
+    // Usamos 'some' para verificar se o acessório está no array.
+    // A comparação deve ser feita pelo 'id' para ser precisa.
+    return this.car.accessories.some(a => a.id === accessory.id);
   }
 
   compareBrand = (b1: Brand, b2: Brand) => (b1 && b2 ? b1.id === b2.id : b1 === b2);

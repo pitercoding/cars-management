@@ -17,7 +17,13 @@
 
           <!-- Model -->
           <mdb-form-control>
-            <input mdbInput type="text" id="carModel" class="form-control" [(ngModel)]="car.model" />
+            <input
+              mdbInput
+              type="text"
+              id="carModel"
+              class="form-control"
+              [(ngModel)]="car.model"
+            />
             <label mdbLabel class="form-label" for="carModel">Model</label>
           </mdb-form-control>
 
@@ -54,20 +60,24 @@
 
           <br />
 
-          <!-- Accessory -->
-          <mdb-form-control>
-            <select
-              mdbInput
-              id="accessory"
-              class="form-control"
-              [(ngModel)]="car.accessories"
-              [compareWith]="compareAccessory"
-            >
-              <option [ngValue]="null">Select a Accessory</option>
-              <option *ngFor="let a of accessories" [ngValue]="a">{{ a.name }}</option>
-            </select>
-            <label mdbLabel class="form-label" for="accessory">Accessory</label>
-          </mdb-form-control>
+          <!-- Accessories with Checkboxes -->
+          <div class="accessories-section">
+            <p class="form-label active">Accessories</p>
+            <div class="d-flex flex-wrap">
+              <div *ngFor="let a of accessories" class="form-check form-check-inline me-3 mb-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="'accessory-' + a.id"
+                  [checked]="isSelected(a)"
+                  (change)="onAccessoryChange(a, $event)"
+                />
+                <label class="form-check-label" [for]="'accessory-' + a.id">
+                  {{ a.name }}
+                </label>
+              </div>
+            </div>
+          </div>
 
           <br />
 

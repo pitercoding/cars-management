@@ -17,16 +17,7 @@ public class CarService {
     }
 
 
-    /**
-     * Validates business rules for Car entities.
-     * Ensures mandatory fields are present and applies
-     * domain-specific constraints, such as preventing
-     * Jeep Compass models from having manufacture years earlier than 2006.
-     * @param name            the car's name
-     * @param manufactureYear the year the car was manufactured
-     * @return true if validation passes
-     * @throws IllegalArgumentException if any business rule is violated
-     */
+    // ========== VALIDATION ========== //
     public boolean checkCarData(String name, int manufactureYear) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Car name cannot be null or empty.");
@@ -43,6 +34,15 @@ public class CarService {
     // ========== CREATE ========== //
     public Car postCar(Car car) {
         checkCarData(car.getName(), car.getManufactureYear());
+
+        if (car.getAccessories() != null && !car.getAccessories().isEmpty()) {
+            car.setAccessories(
+                    car.getAccessories().stream()
+                            .filter(a -> a.getId() != null)
+                            .toList()
+            );
+        }
+
         return carRepository.save(car);
     }
 
@@ -65,6 +65,7 @@ public class CarService {
         existing.setBrand(car.getBrand());
         existing.setModel(car.getModel());
         existing.setManufactureYear(car.getManufactureYear());
+        existing.setAccessories(car.getAccessories());
 
         // WARNING:
         // This update strategy allows creating new CarOwner records
