@@ -38,6 +38,9 @@ export class CarsDetails implements OnInit, OnChanges {
   brands: Brand[] = [];
   accessories: Accessory[] = [];
 
+  readonly minYear = 1886;
+  readonly currentYear = new Date().getFullYear();
+
   ngOnInit(): void {
     if (!this.car.accessories) {
       this.car.accessories = [];
@@ -86,44 +89,41 @@ export class CarsDetails implements OnInit, OnChanges {
     });
   }
 
-  /**
-   * Adiciona ou remove um acessório da lista do carro.
-   * @param accessory O acessório que foi clicado.
-   * @param event O evento de mudança do checkbox.
-   */
   onAccessoryChange(accessory: Accessory, event: Event) {
     const checkbox = event.target as HTMLInputElement;
 
     if (checkbox.checked) {
-      // Adiciona o acessório se não estiver na lista
       if (!this.isSelected(accessory)) {
         this.car.accessories.push(accessory);
       }
     } else {
-      // Remove o acessório da lista
-      const index = this.car.accessories.findIndex(a => a.id === accessory.id);
+      const index = this.car.accessories.findIndex((a) => a.id === accessory.id);
       if (index > -1) {
         this.car.accessories.splice(index, 1);
       }
     }
   }
 
-  /**
-   * Verifica se um acessório já está selecionado para o carro.
-   * Essencial para marcar os checkboxes corretamente ao editar um carro.
-   * @param accessory O acessório a ser verificado.
-   * @returns true se o acessório estiver selecionado, false caso contrário.
-   */
   isSelected(accessory: Accessory): boolean {
-    // Usamos 'some' para verificar se o acessório está no array.
-    // A comparação deve ser feita pelo 'id' para ser precisa.
-    return this.car.accessories.some(a => a.id === accessory.id);
+    return this.car.accessories.some((a) => a.id === accessory.id);
   }
 
   compareBrand = (b1: Brand, b2: Brand) => (b1 && b2 ? b1.id === b2.id : b1 === b2);
   compareAccessory = (a1: Accessory, a2: Accessory) => (a1 && a2 ? a1.id === a2.id : a1 === a2);
 
   saveCar(): void {
+    const year = this.car.manufactureYear;
+    const currentYear = this.currentYear;
+
+    if (year < this.minYear || year > currentYear) {
+      Swal.fire(
+        `Manufacture Year must be between ${this.minYear} and ${currentYear}`,
+        '',
+        'warning'
+      );
+      return;
+    }
+
     if (!this.car.brand?.id) {
       Swal.fire('Please select a Brand', '', 'warning');
       return;

@@ -6,54 +6,66 @@
     <a class="navbar-brand" href="/">SYSTEM LOGO</a>
 
     <!-- Toggle button -->
-    <button class="navbar-toggler" type="button" (click)="basicNavbar.toggle()" aria-expanded="false"
-      aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="basicNavbar.toggle()"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <i class="fas fa-bars"></i>
     </button>
 
     <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent" mdbCollapse #basicNavbar="mdbCollapse">
-
+    <div
+      class="collapse navbar-collapse"
+      id="navbarSupportedContent"
+      mdbCollapse
+      #basicNavbar="mdbCollapse"
+    >
       <!-- Left links -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/admin/dashboard">Home</a>
+          <a
+            class="nav-link"
+            routerLink="/admin/dashboard"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Home
+          </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/admin/cars">Cars</a>
+          <a class="nav-link" routerLink="/admin/cars" routerLinkActive="active"> Cars </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/admin/brands">Brands</a>
+          <a class="nav-link" routerLink="/admin/brands" routerLinkActive="active"> Brands </a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link" href="/admin/accessories">Accessories</a>
+          <a class="nav-link" routerLink="/admin/accessories" routerLinkActive="active">
+            Accessories
+          </a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link" href="/admin/users">Users</a>
+          <a class="nav-link" routerLink="/admin/users" routerLinkActive="active"> Users </a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link" href="/login">Logout</a>
+          <a class="nav-link" routerLink="/login"> Logout </a>
         </li>
       </ul>
+
       <!-- Left links -->
 
       <div class="d-flex align-items-center">
-        <button type="button" class="btn btn-link px-3 me-2">
-          Login
-        </button>
-        <button type="button" class="btn btn-primary me-3">
-          Welcome
-        </button>
-        <a
-          class="btn btn-success px-3"
-          role="button"
-          >Change Password</a>
+        <button type="button" class="btn btn-link px-3 me-2">Login</button>
+        <button type="button" class="btn btn-primary me-3">Welcome</button>
+        <a class="btn btn-success px-3" role="button">Change Password</a>
       </div>
-
-
-
     </div>
     <!-- Collapsible wrapper -->
   </div>

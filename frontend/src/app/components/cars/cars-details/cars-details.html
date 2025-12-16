@@ -37,8 +37,10 @@
               id="manufactureYear"
               class="form-control"
               [(ngModel)]="car.manufactureYear"
+              [min]="minYear"
+              [max]="currentYear"
             />
-            <label mdbLabel class="form-label" for="manufactureYear">Manufacture Year</label>
+            <label mdbLabel class="form-label" for="manufactureYear">Manufacture Year ({{ minYear }} - {{ currentYear }})</label>
           </mdb-form-control>
 
           <br />
