@@ -63,7 +63,7 @@ export class CarsDetails implements OnInit, OnChanges {
 
     const isEdit = !!this.car.id;
     const request$ = isEdit
-      ? this.carService.updateCar(this.car, this.car.id!)
+      ? this.carService.updateCar(this.car.id!, this.car)
       : this.carService.postCar(this.car);
 
     request$.subscribe({
