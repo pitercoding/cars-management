@@ -8,12 +8,12 @@
           <h3>Sign In</h3>
           <br>
           <mdb-form-control>
-            <input mdbInput type="text" id="user" class="form-control" [(ngModel)]="user" (keyup.enter)="logon()" />
+            <input mdbInput type="text" id="user" class="form-control" name="username" [(ngModel)]="loginAttempt.username" (keyup.enter)="logon()" />
             <label mdbLabel class="form-label" for="user">User</label>
           </mdb-form-control>
           <br />
           <mdb-form-control>
-            <input mdbInput type="password" id="password" class="form-control" [(ngModel)]="password" (keyup.enter)="logon()" />
+            <input mdbInput type="password" id="password" class="form-control" name="password" [(ngModel)]="loginAttempt.password" (keyup.enter)="logon()" />
             <label mdbLabel class="form-label" for="password">Password</label>
           </mdb-form-control>
           <br />
