@@ -20,6 +20,10 @@ export class LoginComponent {
   router = inject(Router);
   loginService = inject(LoginService);
 
+  constructor() {
+    this.loginService.removeToken();
+  }
+
   logon() {
     this.loginService.login(this.loginAttempt).subscribe({
       next: token => {
