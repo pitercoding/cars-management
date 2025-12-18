@@ -1,7 +1,11 @@
 package com.cars.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +33,10 @@ public class Car {
     @JoinColumn(name = "brand_id", nullable = false) // FK
     private Brand brand;
 
-    @ManyToMany
-    @JoinTable(name = "car_carOwner")
-    private List<CarOwner> carOwners;
+    @OneToOne
+    @JoinColumn(name = "owner_id", unique = true)
+    @JsonManagedReference
+    private Owner owner;
 
     @ManyToMany
     @JoinTable(

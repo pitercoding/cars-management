@@ -7,11 +7,12 @@ import { BrandsList } from './components/brands/brands-list/brands-list';
 import { BrandsDetails } from './components/brands/brands-details/brands-details';
 import { AccessoriesList } from './components/accessories/accessories-list/accessories-list';
 import { AccessoriesDetails } from './components/accessories/accessories-details/accessories-details';
+import { loginGuard } from './auth/login-guard';
 
 export const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: 'full' },
   { path: "login", component: LoginComponent },
-  { path: "admin", component: MainContent, children: [
+  { path: "admin", component: MainContent, canActivate: [loginGuard], children: [
     { path: "cars", component: CarsList },
     { path: "cars/new", component: CarsDetails },
     { path: "cars/edit/:id", component: CarsDetails },

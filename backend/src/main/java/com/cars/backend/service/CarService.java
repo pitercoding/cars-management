@@ -35,6 +35,10 @@ public class CarService {
     public Car postCar(Car car) {
         checkCarData(car.getName(), car.getManufactureYear());
 
+        if (car.getOwner() != null && car.getOwner().getId() == null) {
+            throw new IllegalArgumentException("Owner must already exist.");
+        }
+
         if (car.getAccessories() != null && !car.getAccessories().isEmpty()) {
             car.setAccessories(
                     car.getAccessories().stream()
@@ -66,13 +70,7 @@ public class CarService {
         existing.setModel(car.getModel());
         existing.setManufactureYear(car.getManufactureYear());
         existing.setAccessories(car.getAccessories());
-
-        // WARNING:
-        // This update strategy allows creating new CarOwner records
-        // if the request body contains owners without an ID.
-        // This will be refactored in the future using DTOs
-        // and explicit association handling.
-        existing.setCarOwners(car.getCarOwners());
+        existing.setOwner(car.getOwner());
 
         return carRepository.save(existing);
     }
