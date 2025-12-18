@@ -32,7 +32,7 @@
     >
       <!-- Left links -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a
             class="nav-link"
             routerLink="/admin/dashboard"
@@ -41,7 +41,7 @@
           >
             Home
           </a>
-        </li>
+        </li> -->
 
         <li class="nav-item">
           <a class="nav-link" routerLink="/admin/cars" routerLinkActive="active"> Cars </a>
@@ -57,9 +57,11 @@
           </a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/users" routerLinkActive="active"> Users </a>
-        </li>
+        @if (loginService.hasRole("ROLE_ADMIN")) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/users" routerLinkActive="active"> Users </a>
+          </li>
+        }
 
         <li class="nav-item">
           <a class="nav-link" routerLink="/login"> Logout </a>
@@ -70,7 +72,9 @@
 
       <div class="d-flex align-items-center">
         <button type="button" class="btn btn-link px-3 me-2">Login</button>
-        <button type="button" class="btn btn-primary me-3">Welcome</button>
+        <button type="button" class="btn btn-primary me-3 welcome-btn">
+          Welcome, {{ user.username || 'Guest' }}
+        </button>
         <a class="btn btn-success px-3" role="button">Change Password</a>
       </div>
     </div>

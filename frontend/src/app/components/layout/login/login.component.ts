@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { LoginService } from '../../../auth/login.service';
 import { Login } from '../../../auth/login';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ import { Login } from '../../../auth/login';
 export class LoginComponent {
   loginAttempt: Login = {
     username: '',
-    password: ''
+    password: '',
   };
 
   router = inject(Router);
@@ -26,15 +27,25 @@ export class LoginComponent {
 
   logon() {
     this.loginService.login(this.loginAttempt).subscribe({
-      next: token => {
+      next: (token) => {
         if (token) {
           this.loginService.addToken(token);
           this.router.navigate(['/admin/cars']);
-        } else {
-          alert('Incorrect user or password!');
         }
       },
-      error: () => alert('ERROR!')
+      error: (err: HttpErrorResponse) => {
+        if (err.status === 401) {
+          alert('Invalid username or password.');
+        } else if (err.status === 403) {
+          alert('Access denied.');
+        } else if (err.status === 0) {
+          alert('Unable to connect to the server. Please try again later.');
+        } else {
+          alert('An unexpected error occurred. Please try again.');
+        }
+
+        console.error('[LOGIN] Authentication error:', err);
+      },
     });
   }
 }

@@ -9,7 +9,7 @@ export const myhttpInterceptor: HttpInterceptorFn = (request, next) => {
 
   let token = localStorage.getItem('token');
 
-  console.log('entered here 1');
+  console.log('[HTTP INTERCEPTOR] Attaching JWT token to Authorization header');
   if (token && !router.url.includes('/login')) {
     request = request.clone({
       setHeaders: { Authorization: 'Bearer ' + token },
@@ -19,14 +19,14 @@ export const myhttpInterceptor: HttpInterceptorFn = (request, next) => {
   return next(request).pipe(
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse) {
-        console.log('entered here 2');
+        console.log('[HTTP INTERCEPTOR] HTTP error intercepted', err.status);
 
         if (err.status === 401) {
-          window.alert('401 - adjust here');
+          window.alert('[HTTP INTERCEPTOR] 401 Unauthorized - redirecting to login.');
           router.navigate(['/login']);
         } else
         if (err.status === 403) {
-          window.alert('403 - adjust here');
+          window.alert('[HTTP INTERCEPTOR] 403 Forbidden - insufficient permissions.');
           router.navigate(['/login']);
         } else {
           console.error('HTTP error:', err);
