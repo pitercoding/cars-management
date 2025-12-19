@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
-import { LoginService } from '../../../auth/login.service';
+import { LoginService } from '../../../auth/services/login.service';
 import { User } from '../../../auth/user';
 
 @Component({

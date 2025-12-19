@@ -7,7 +7,9 @@ import { BrandsList } from './components/brands/brands-list/brands-list';
 import { BrandsDetails } from './components/brands/brands-details/brands-details';
 import { AccessoriesList } from './components/accessories/accessories-list/accessories-list';
 import { AccessoriesDetails } from './components/accessories/accessories-details/accessories-details';
-import { loginGuard } from './auth/login-guard';
+import { loginGuard } from './auth/guards/login-guard';
+import { UsersList } from './auth/components/users-list/users-list';
+import { UsersDetails } from './auth/components/users-details/users-details';
 
 export const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: 'full' },
@@ -21,6 +23,9 @@ export const routes: Routes = [
     { path: "brands/edit/:id", component: BrandsDetails },
     { path: "accessories", component: AccessoriesList },
     { path: "accessories/new", component: AccessoriesDetails },
-    { path: "accessories/edit/:id", component: AccessoriesDetails }
+    { path: "accessories/edit/:id", component: AccessoriesDetails },
+    { path: "users", component: UsersList },
+    { path: "users/new", component: UsersDetails },
+    { path: "users/edit/:id", component:UsersDetails }
   ]}
 ];

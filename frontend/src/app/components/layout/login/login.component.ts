@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { LoginService } from '../../../auth/login.service';
+import { LoginService } from '../../../auth/services/login.service';
 import { Login } from '../../../auth/login';
 import { HttpErrorResponse } from '@angular/common/http';
 
