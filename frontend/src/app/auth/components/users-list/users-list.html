@@ -1,1 +1,69 @@
-<p>users-list works!</p>
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h3>Users List</h3>
+
+          <div class="toright">
+            <button type="button" class="btn btn-primary btn-rounded" mdRipple (click)="new()">
+              New
+            </button>
+          </div>
+          <br />
+
+          <table border="1" class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (user of list; track user.id) {
+              <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.fullName }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.role }}</td>
+                <td class="toright">
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-rounded"
+                    mdRipple
+                    (click)="edit(user)"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-rounded"
+                    mdRipple
+                    (click)="deleteById(user)"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalUsersList>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+  </div>
+  <div class="modal-body">
+    <app-users-details [user]="userEdit" (return)="returnDetails()"></app-users-details>
+  </div>
+</ng-template>

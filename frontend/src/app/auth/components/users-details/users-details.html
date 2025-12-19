@@ -1,1 +1,70 @@
-<p>users-details works!</p>
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 tocenter totop">
+      <div class="card">
+        <div class="card-body">
+          <h3>New User</h3>
+          <br />
+
+          <!-- User Name -->
+          <mdb-form-control>
+            <input
+              mdbInput
+              type="text"
+              id="userfullName"
+              class="form-control"
+              [(ngModel)]="user.fullName"
+            />
+            <label mdbLabel class="form-label" for="userfullName"> Full Name </label>
+          </mdb-form-control>
+
+          <br />
+
+          <!-- Username -->
+          <mdb-form-control>
+            <input
+              mdbInput
+              type="text"
+              id="userUsername"
+              class="form-control"
+              [(ngModel)]="user.username"
+            />
+            <label mdbLabel class="form-label" for="userUsername"> Username </label>
+          </mdb-form-control>
+
+          <br />
+
+          <!-- Password-->
+          <mdb-form-control>
+            <input
+              mdbInput
+              type="password"
+              id="userPassword"
+              class="form-control"
+              [(ngModel)]="user.password"
+            />
+            <label mdbLabel class="form-label" for="userPassword"> Password </label>
+          </mdb-form-control>
+
+          <br />
+
+          <!-- Role -->
+          <mdb-form-control>
+            <select mdbInput class="form-control" [(ngModel)]="user.role" id="userRole">
+              <option value="ROLE_STANDARD_USER">Standard User</option>
+              <option value="ROLE_ADMIN">Admin</option>
+            </select>
+            <label mdbLabel class="form-label" for="userRole"> Role </label>
+          </mdb-form-control>
+
+          <br />
+
+          <button type="button" class="btn btn-primary btn-rounded" mdRipple (click)="saveUser()">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
