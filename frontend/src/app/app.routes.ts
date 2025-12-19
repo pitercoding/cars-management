@@ -10,6 +10,8 @@ import { AccessoriesDetails } from './components/accessories/accessories-details
 import { loginGuard } from './auth/guards/login-guard';
 import { UsersList } from './auth/components/users-list/users-list';
 import { UsersDetails } from './auth/components/users-details/users-details';
+import { OwnersList } from './components/owners/owners-list/owners-list';
+import { OwnersDetails } from './components/owners/owners-details/owners-details';
 
 export const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: 'full' },
@@ -26,6 +28,9 @@ export const routes: Routes = [
     { path: "accessories/edit/:id", component: AccessoriesDetails },
     { path: "users", component: UsersList },
     { path: "users/new", component: UsersDetails },
-    { path: "users/edit/:id", component:UsersDetails }
+    { path: "users/edit/:id", component: UsersDetails },
+    { path: "owners", component: OwnersList },
+    { path: "owners/new", component: OwnersDetails },
+    { path: "owners/edit/:id", component: OwnersDetails }
   ]}
 ];

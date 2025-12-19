@@ -1,0 +1,74 @@
+<br>
+<div class="container">
+  <div class="row">
+
+    <div class="col-lg-12 tocenter totop">
+      <div class="card">
+        <div class="card-body">
+          <h3>New Owner</h3>
+          <br>
+
+          <!-- Owner Name -->
+          <mdb-form-control>
+            <input
+              mdbInput
+              type="text"
+              id="ownerName"
+              class="form-control"
+              [(ngModel)]="owner.fullName"
+            />
+            <label mdbLabel class="form-label" for="ownerName">
+              Full Name
+            </label>
+          </mdb-form-control>
+
+          <br />
+
+          <!-- Date of Birth -->
+          <mdb-form-control>
+            <input
+              mdbInput
+              type="date"
+              id="ownerDateOfBirth"
+              class="form-control"
+              [(ngModel)]="owner.dateOfBirth"
+            />
+            <label mdbLabel class="form-label" for="ownerDateOfBirth">
+              Date of Birth
+            </label>
+          </mdb-form-control>
+
+          <br />
+
+          <!-- Driver's License -->
+          <mdb-form-control>
+            <input
+              mdbInput
+              type="text"
+              id="ownerDriversLicense"
+              class="form-control"
+              [(ngModel)]="owner.driversLicense"
+            />
+            <label mdbLabel class="form-label" for="ownerDriversLicense">
+              Driver's License
+            </label>
+          </mdb-form-control>
+
+          <br />
+
+          <button
+            type="button"
+            class="btn btn-primary btn-rounded"
+            mdRipple
+            (click)="saveOwner()"
+          >
+            Save
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
