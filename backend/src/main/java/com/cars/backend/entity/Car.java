@@ -2,6 +2,7 @@ package com.cars.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,9 +22,11 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Car name is required!")
     @Column(nullable = false)
     private String name;
 
+    @NotBlank(message = "Car model is required!")
     @Column(nullable = false)
     private String model;
 

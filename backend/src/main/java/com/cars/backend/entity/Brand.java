@@ -2,7 +2,11 @@ package com.cars.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -18,9 +22,11 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Brand name is required!")
     @Column(nullable = false)
     private String name;
 
+    @NotBlank(message = "Tax Identification Number is required!")
     @Column(nullable = false, unique = true)
     private String taxIdentificationNumber;
 

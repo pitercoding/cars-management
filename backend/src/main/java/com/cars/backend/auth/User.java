@@ -28,19 +28,19 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Full name is required!")
     @NotNull
     private String fullName;
 
-    @NotBlank
+    @NotBlank(message = "Username is required!")
     @NotNull
     private String username;
 
-    @NotBlank
+    @NotBlank(message = "Password is required!")
     @NotNull
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "Role is required!")
     @NotNull
     private String role;
 

@@ -24,15 +24,15 @@ public class Owner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Full name is required!")
     @Column(nullable = false)
     private String fullName;
 
-    @NotNull
+    @NotNull(message = "Date of birth is required!")
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
-    @NotBlank
+    @NotBlank(message = "Driver's license is required!")
     @Column(name = "drivers_license", nullable = false, unique = true)
     private String driversLicense;
 
