@@ -89,8 +89,11 @@ export class CarsList {
     });
   }
 
-  returnDetails(): void {
-    this.getAllCars();
+  returnDetails(car: Car | undefined): void {
+    if (car) {
+      this.getAllCars();
+    }
+
     this.modalRef.close();
   }
 }

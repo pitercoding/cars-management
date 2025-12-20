@@ -59,7 +59,7 @@
                     mdRipple
                     (click)="deleteById(car)"
                   >
-                    Delete
+                  Delete
                   </button>
                 </td>
               </tr>
@@ -78,6 +78,6 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
   </div>
   <div class="modal-body">
-    <app-cars-details [car]="carEdit" (return)="returnDetails()"></app-cars-details>
+    <app-cars-details [car]="carEdit" (return)="returnDetails($event)"></app-cars-details>
   </div>
 </ng-template>

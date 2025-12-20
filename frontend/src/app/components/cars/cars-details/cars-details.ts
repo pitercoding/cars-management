@@ -31,7 +31,7 @@ import { Owner } from '../../../models/owner';
 })
 export class CarsDetails implements OnInit, OnChanges {
   @Input() car: Car = new Car();
-  @Output() return = new EventEmitter<Car>();
+  @Output() return = new EventEmitter<Car | undefined>();
 
   private carService = inject(CarService);
   private brandService = inject(BrandService);
@@ -132,7 +132,7 @@ export class CarsDetails implements OnInit, OnChanges {
 
   compareBrand = (b1: Brand, b2: Brand) => (b1 && b2 ? b1.id === b2.id : b1 === b2);
   compareAccessory = (a1: Accessory, a2: Accessory) => (a1 && a2 ? a1.id === a2.id : a1 === a2);
-  compareOwner = (o1: Owner, o2: Owner) => o1 && o2 ? o1.id === o2.id : o1 === o2;
+  compareOwner = (o1: Owner, o2: Owner) => (o1 && o2 ? o1.id === o2.id : o1 === o2);
 
   saveCar(): void {
     const year = this.car.manufactureYear;
@@ -162,8 +162,13 @@ export class CarsDetails implements OnInit, OnChanges {
         Swal.fire(isEdit ? 'Edited successfully!' : 'Saved successfully!', '', 'success');
         this.return.emit(this.car);
       },
-      error: () => {
-        Swal.fire(isEdit ? 'Failed to update this car' : 'Failed to save this car', '', 'error');
+      error: (err) => {
+        Swal.fire(
+          isEdit ? 'Failed to update this car' : 'Failed to save this car',
+          err?.message || '',
+          'error'
+        );
+        this.return.emit(undefined);
       },
     });
   }
