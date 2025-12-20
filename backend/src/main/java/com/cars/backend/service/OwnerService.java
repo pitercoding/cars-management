@@ -29,11 +29,9 @@ public class OwnerService {
         }
 
         int age = Period.between(dateOfBirth, LocalDate.now()).getYears();
-
         if (age < 16) {
             throw new IllegalArgumentException("Owner must be at least 16 years old.");
         }
-
         if (age > 120) {
             throw new IllegalArgumentException("Owner age cannot be greater than 120 years.");
         }
@@ -43,9 +41,18 @@ public class OwnerService {
         }
     }
 
+    private void checkDriversLicenseUnique(String driversLicense, Long currentOwnerId) {
+        ownerRepository.findByDriversLicense(driversLicense).ifPresent(existing -> {
+            if (currentOwnerId == null || !existing.getId().equals(currentOwnerId)) {
+                throw new IllegalArgumentException("Driver's License already exists.");
+            }
+        });
+    }
+
     // ========== CREATE ==========
     public Owner postOwner(Owner owner) {
         checkOwnerData(owner.getFullName(), owner.getDateOfBirth(), owner.getDriversLicense());
+        checkDriversLicenseUnique(owner.getDriversLicense(), null);
         return ownerRepository.save(owner);
     }
 
@@ -64,6 +71,7 @@ public class OwnerService {
     // ========== UPDATE ==========
     public Owner updateOwner(Owner owner, Long id) {
         checkOwnerData(owner.getFullName(), owner.getDateOfBirth(), owner.getDriversLicense());
+        checkDriversLicenseUnique(owner.getDriversLicense(), id);
 
         Owner existing = getOwnerById(id);
         existing.setFullName(owner.getFullName());
@@ -77,5 +85,10 @@ public class OwnerService {
     public void deleteOwner(Long id) {
         Owner existing = getOwnerById(id);
         ownerRepository.delete(existing);
+    }
+
+    // ========== Available Owners ==========
+    public List<Owner> getAvailableOwners() {
+        return ownerRepository.findAvailableOwners();
     }
 }

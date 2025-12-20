@@ -1,6 +1,5 @@
 package com.cars.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -34,12 +33,11 @@ public class Owner {
     private LocalDate dateOfBirth;
 
     @NotBlank
-    @Column(name = "drivers_license", nullable = false)
+    @Column(name = "drivers_license", nullable = false, unique = true)
     private String driversLicense;
 
     @JsonIgnore
     @OneToOne(mappedBy = "owner")
-    @JsonBackReference
     private Car car;
 
     public int getAge() {

@@ -11,23 +11,26 @@ export class OwnerService {
   private apiUrl = 'http://localhost:8080/api/owners';
 
   getAllOwners(): Observable<Owner[]> {
-      return this.http.get<Owner[]>(`${this.apiUrl}`);
-    }
+    return this.http.get<Owner[]>(`${this.apiUrl}`);
+  }
 
-    getOwnerById(id: number): Observable<Owner> {
-      return this.http.get<Owner>(`${this.apiUrl}/${id}`);
-    }
+  getOwnerById(id: number): Observable<Owner> {
+    return this.http.get<Owner>(`${this.apiUrl}/${id}`);
+  }
 
-    postOwner(owner: Owner): Observable<Owner> {
-      return this.http.post<Owner>(`${this.apiUrl}`, owner);
-    }
+  getAvailableOwners(): Observable<Owner[]> {
+    return this.http.get<Owner[]>(`${this.apiUrl}/available`);
+  }
 
-    updateOwner(id: number, owner: Owner): Observable<Owner> {
-      return this.http.put<Owner>(`${this.apiUrl}/${id}`, owner);
-    }
+  postOwner(owner: Owner): Observable<Owner> {
+    return this.http.post<Owner>(`${this.apiUrl}`, owner);
+  }
 
-    deleteOwner(id: number): Observable<void> {
-      return this.http.delete<void>(`${this.apiUrl}/${id}`);
-    }
+  updateOwner(id: number, owner: Owner): Observable<Owner> {
+    return this.http.put<Owner>(`${this.apiUrl}/${id}`, owner);
+  }
 
+  deleteOwner(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

@@ -32,8 +32,9 @@ export class OwnersDetails {
         Swal.fire('Saved successfully!', '', 'success');
         this.return.emit();
       },
-      error: () => {
-        Swal.fire('Failed to save this owner.', '', 'error');
+      error: (err) => {
+      const msg = err.error || 'Failed to save this owner.';
+      Swal.fire('Error', msg, 'error');
       },
     });
   }

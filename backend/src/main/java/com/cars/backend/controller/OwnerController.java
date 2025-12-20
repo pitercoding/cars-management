@@ -26,16 +26,8 @@ public class OwnerController {
         try {
             Owner savedOwner = ownerService.postOwner(owner);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedOwner);
-
         } catch (IllegalArgumentException e) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
-
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body("Owner already exists.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -52,8 +44,13 @@ public class OwnerController {
 
     // ========== UPDATE ==========
     @PutMapping("/{id}")
-    public Owner updateOwner(@PathVariable Long id, @RequestBody Owner owner) {
-        return ownerService.updateOwner(owner, id);
+    public ResponseEntity<?> updateOwner(@PathVariable Long id, @RequestBody Owner owner) {
+        try {
+            Owner updated = ownerService.updateOwner(owner, id);
+            return ResponseEntity.ok(updated);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     // ========== DELETE ==========
@@ -62,5 +59,10 @@ public class OwnerController {
         ownerService.deleteOwner(id);
         return ResponseEntity.noContent().build();
     }
-}
 
+    // ========== Available Owners ==========
+    @GetMapping("/available")
+    public List<Owner> getAvailableOwners() {
+        return ownerService.getAvailableOwners();
+    }
+}

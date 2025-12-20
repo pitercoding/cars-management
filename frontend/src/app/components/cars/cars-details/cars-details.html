@@ -40,7 +40,9 @@
               [min]="minYear"
               [max]="currentYear"
             />
-            <label mdbLabel class="form-label" for="manufactureYear">Manufacture Year ({{ minYear }} - {{ currentYear }})</label>
+            <label mdbLabel class="form-label" for="manufactureYear"
+              >Manufacture Year ({{ minYear }} - {{ currentYear }})</label
+            >
           </mdb-form-control>
 
           <br />
@@ -80,6 +82,27 @@
               </div>
             </div>
           </div>
+
+          <br />
+
+          <!-- Owner -->
+          <mdb-form-control>
+            <select
+              mdbInput
+              class="form-control"
+              [(ngModel)]="car.owner"
+              [compareWith]="compareOwner"
+            >
+              <option [ngValue]="null">Unassigned</option>
+
+              @for (owner of owners; track owner.id) {
+              <option [ngValue]="owner">
+                {{ owner.fullName }} — DL: {{ owner.driversLicense }}
+              </option>
+              }
+            </select>
+            <label mdbLabel class="form-label">Owner</label>
+          </mdb-form-control>
 
           <br />
 

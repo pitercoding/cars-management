@@ -1,3 +1,4 @@
+import { OwnerService } from './../../../services/owner.service';
 import { AccessoryService } from './../../../services/accessory.service';
 import {
   Component,
@@ -19,6 +20,7 @@ import { CarService } from '../../../services/car.service';
 import { BrandService } from '../../../services/brand.service';
 import { CommonModule } from '@angular/common';
 import { Accessory } from '../../../models/accessory';
+import { Owner } from '../../../models/owner';
 
 @Component({
   selector: 'app-cars-details',
@@ -34,9 +36,11 @@ export class CarsDetails implements OnInit, OnChanges {
   private carService = inject(CarService);
   private brandService = inject(BrandService);
   private AccessoryService = inject(AccessoryService);
+  private ownerService = inject(OwnerService);
 
   brands: Brand[] = [];
   accessories: Accessory[] = [];
+  owners: Owner[] = [];
 
   readonly minYear = 1886;
   readonly currentYear = new Date().getFullYear();
@@ -47,12 +51,14 @@ export class CarsDetails implements OnInit, OnChanges {
     }
     this.loadBrands();
     this.loadAccessories();
+    this.loadOwners();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['car'] && this.car) {
       this.loadBrands();
       this.loadAccessories();
+      this.loadOwners();
     }
   }
 
@@ -89,6 +95,22 @@ export class CarsDetails implements OnInit, OnChanges {
     });
   }
 
+  loadOwners(): void {
+    this.ownerService.getAvailableOwners().subscribe({
+      next: (list) => {
+        this.owners = list;
+
+        if (this.car.owner) {
+          const exists = this.owners.some((o) => o.id === this.car.owner!.id);
+          if (!exists) {
+            this.owners.unshift(this.car.owner);
+          }
+        }
+      },
+      error: () => Swal.fire('Failed to load owners', '', 'error'),
+    });
+  }
+
   onAccessoryChange(accessory: Accessory, event: Event) {
     const checkbox = event.target as HTMLInputElement;
 
@@ -110,6 +132,7 @@ export class CarsDetails implements OnInit, OnChanges {
 
   compareBrand = (b1: Brand, b2: Brand) => (b1 && b2 ? b1.id === b2.id : b1 === b2);
   compareAccessory = (a1: Accessory, a2: Accessory) => (a1 && a2 ? a1.id === a2.id : a1 === a2);
+  compareOwner = (o1: Owner, o2: Owner) => o1 && o2 ? o1.id === o2.id : o1 === o2;
 
   saveCar(): void {
     const year = this.car.manufactureYear;
