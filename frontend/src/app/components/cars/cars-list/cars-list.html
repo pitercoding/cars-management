@@ -21,6 +21,7 @@
                 <th>Model</th>
                 <th>Manufacture Year</th>
                 <th>Brand</th>
+                <th>Owner</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -32,6 +33,17 @@
                 <td>{{ car.model }}</td>
                 <td>{{ car.manufactureYear }}</td>
                 <td>{{ car.brand?.name }}</td>
+                <td>
+                  @if (car.owner) {
+                    {{ car.owner.fullName }} <br />
+                    <small>
+                      DL: {{ car.owner.driversLicense }}
+                    </small>
+                  } @else {
+                    <span class="text-muted">Unassigned</span>
+                  }
+                </td>
+
                 <td class="toright">
                   <button
                     type="button"

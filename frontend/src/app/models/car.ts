@@ -1,5 +1,6 @@
 import { Accessory } from './accessory';
 import { Brand } from './brand';
+import { Owner } from './owner';
 
 export class Car {
   id?: number;
@@ -7,7 +8,8 @@ export class Car {
   model: string = '';
   manufactureYear: number = new Date().getFullYear();
   brand?: Brand;
-  accessories!: Accessory[];
+  accessories: Accessory[] = [];
+  owner?: Owner;
 
   constructor(init?: Partial<Car>) {
     Object.assign(this, init);
