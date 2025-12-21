@@ -8,6 +8,8 @@ import { UsersDetails } from '../users-details/users-details';
 import { User } from '../../user';
 import { UserService } from '../../services/user.service';
 import Swal from 'sweetalert2';
+import { LoginService } from '../../services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users-list',
@@ -21,7 +23,7 @@ import Swal from 'sweetalert2';
     UsersDetails,
   ],
   templateUrl: './users-list.html',
-  styleUrl: './users-list.scss',
+  styleUrls: ['./users-list.scss'],
 })
 export class UsersList {
   list: User[] = [];
@@ -32,15 +34,29 @@ export class UsersList {
 
   private modalService = inject(MdbModalService);
   private userService = inject(UserService);
+  private loginService = inject(LoginService);
+  private router = inject(Router);
 
   constructor() {
+    if (!this.loginService.hasRole('ROLE_ADMIN')) {
+      Swal.fire(
+        'Access Denied',
+        'You do not have permission to access this page.',
+        'warning'
+      ).then(() => this.router.navigate(['/admin/cars']));
+      return;
+    }
+
     this.getAllUsers();
   }
 
   getAllUsers(): void {
     this.userService.getAllUsers().subscribe({
       next: (users) => (this.list = users),
-      error: () => Swal.fire('Failed to retrieve the user list.', '', 'error'),
+      error: (err) => {
+        const msg = err.error?.message || 'Failed to retrieve the user list.';
+        Swal.fire('Error', msg, 'error');
+      },
     });
   }
 
@@ -66,10 +82,13 @@ export class UsersList {
       if (result.isConfirmed) {
         this.userService.deleteUser(user.id!).subscribe({
           next: () => {
-            this.list = this.list.filter((b) => b.id !== user.id);
+            this.list = this.list.filter((u) => u.id !== user.id);
             Swal.fire('Successfully deleted!', '', 'success');
           },
-          error: () => Swal.fire('Failed to delete this user.', '', 'error'),
+          error: (err) => {
+            const msg = err.error?.message || 'Failed to delete this user.';
+            Swal.fire('Error', msg, 'error');
+          },
         });
       }
     });

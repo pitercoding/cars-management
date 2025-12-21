@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-accessories-list',
+  standalone: true,
   imports: [
     CommonModule,
     MdbRippleModule,
@@ -41,7 +42,10 @@ export class AccessoriesList {
       next: (accessories) => {
         this.list = accessories.sort((a, b) => a.id! - b.id!);
       },
-      error: () => Swal.fire('Failed to retrieve the Accessory list.', '', 'error'),
+      error: (err) => {
+        const msg = err.error?.message || 'Failed to retrieve the accessory list';
+        Swal.fire('Error', msg, 'error');
+      },
     });
   }
 
@@ -69,7 +73,10 @@ export class AccessoriesList {
             this.list = this.list.filter((a) => a.id !== accessory.id);
             Swal.fire('Successfully deleted!', '', 'success');
           },
-          error: () => Swal.fire('Failed to delete this accessory.', '', 'error'),
+          error: (err) => {
+            const msg = err.error?.message || 'Failed to delete accessory.';
+            Swal.fire('Error', msg, 'error');
+          },
         });
       }
     });

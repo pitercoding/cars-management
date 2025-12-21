@@ -33,8 +33,9 @@ export class BrandsDetails {
         Swal.fire('Saved successfully!', '', 'success');
         this.return.emit();
       },
-      error: () => {
-        Swal.fire('Failed to save this brand.', '', 'error');
+      error: (err) => {
+        const msg = err.error?.message || 'Failed to save this brand.';
+        Swal.fire('Error', msg, 'error');
       },
     });
   }
@@ -45,8 +46,9 @@ export class BrandsDetails {
         Swal.fire('Successfully edited!', '', 'success');
         this.return.emit();
       },
-      error: () => {
-        Swal.fire('Failed to update this brand.', '', 'error');
+      error: (err) => {
+        const msg = err.error?.message || 'Failed to update this brand.';
+        Swal.fire('Error', msg, 'error');
       },
     });
   }

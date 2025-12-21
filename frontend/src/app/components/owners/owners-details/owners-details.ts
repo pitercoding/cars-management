@@ -33,7 +33,7 @@ export class OwnersDetails {
         this.return.emit();
       },
       error: (err) => {
-      const msg = err.error || 'Failed to save this owner.';
+      const msg = err.error?.message || 'Failed to save this owner.';
       Swal.fire('Error', msg, 'error');
       },
     });
@@ -45,8 +45,9 @@ export class OwnersDetails {
         Swal.fire('Successfully edited!', '', 'success');
         this.return.emit();
       },
-      error: () => {
-        Swal.fire('Failed to update this owner.', '', 'error');
+      error: (err) => {
+        const msg = err.error?.message || 'Failed to update this owner.';
+      Swal.fire('Error', msg, 'error');
       },
     });
   }

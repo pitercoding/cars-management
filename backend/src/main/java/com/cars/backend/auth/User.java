@@ -1,16 +1,13 @@
 package com.cars.backend.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,19 +26,15 @@ public class User implements UserDetails {
     private Long id;
 
     @NotBlank(message = "Full name is required!")
-    @NotNull
     private String fullName;
 
     @NotBlank(message = "Username is required!")
-    @NotNull
     private String username;
 
     @NotBlank(message = "Password is required!")
-    @NotNull
     private String password;
 
     @NotBlank(message = "Role is required!")
-    @NotNull
     private String role;
 
     @Override

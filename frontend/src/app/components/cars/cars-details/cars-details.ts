@@ -35,7 +35,7 @@ export class CarsDetails implements OnInit, OnChanges {
 
   private carService = inject(CarService);
   private brandService = inject(BrandService);
-  private AccessoryService = inject(AccessoryService);
+  private accessoryService = inject(AccessoryService);
   private ownerService = inject(OwnerService);
 
   brands: Brand[] = [];
@@ -76,12 +76,15 @@ export class CarsDetails implements OnInit, OnChanges {
           this.car.brand = undefined;
         }
       },
-      error: () => Swal.fire('Failed to load brands', '', 'error'),
+      error: (err) => {
+        const msg = err.error?.message || 'Failed to load brands.';
+        Swal.fire('Error', msg, 'error');
+      },
     });
   }
 
   loadAccessories(): void {
-    this.AccessoryService.getAllAccessories().subscribe({
+    this.accessoryService.getAllAccessories().subscribe({
       next: (list) => {
         this.accessories = list.sort((a, b) => a.id! - b.id!);
 
@@ -163,12 +166,11 @@ export class CarsDetails implements OnInit, OnChanges {
         this.return.emit(this.car);
       },
       error: (err) => {
-        Swal.fire(
-          isEdit ? 'Failed to update this car' : 'Failed to save this car',
-          err?.message || '',
-          'error'
-        );
-        this.return.emit(undefined);
+        const msg =
+          err.error?.message ||
+          (isEdit ? 'Failed to update this car.' : 'Failed to save this car.');
+
+        Swal.fire('Error', msg, 'error');
       },
     });
   }

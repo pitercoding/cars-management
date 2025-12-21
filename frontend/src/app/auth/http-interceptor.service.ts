@@ -2,36 +2,33 @@ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
+import Swal from 'sweetalert2';
 
 export const myhttpInterceptor: HttpInterceptorFn = (request, next) => {
-  let router = inject(Router);
+  const router = inject(Router);
+  const token = localStorage.getItem('token');
 
-  let token = localStorage.getItem('token');
-
-  console.log('[HTTP INTERCEPTOR] Attaching JWT token to Authorization header');
   if (token && !router.url.includes('/login')) {
-    request = request.clone({
-      setHeaders: { Authorization: 'Bearer ' + token },
-    });
+    request = request.clone({ setHeaders: { Authorization: 'Bearer ' + token } });
   }
 
   return next(request).pipe(
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse) {
-        console.log('[HTTP INTERCEPTOR] HTTP error intercepted', err.status);
-
+        const msg = err.error?.message || 'An error occurred';
         if (err.status === 401) {
-          window.alert('[HTTP INTERCEPTOR] 401 Unauthorized - redirecting to login.');
+          Swal.fire('Unauthorized', msg, 'warning');
           router.navigate(['/login']);
         } else if (err.status === 403) {
-          console.warn('[HTTP INTERCEPTOR] 403 Forbidden', err.error);
+          Swal.fire('Forbidden', msg, 'warning');
         } else {
-          console.error('HTTP error:', err);
+          Swal.fire('HTTP Error', msg, 'error');
         }
+        console.error('[HTTP INTERCEPTOR]', err);
       } else {
-        console.error('An error occurred:', err);
+        Swal.fire('Error', 'An unexpected error occurred', 'error');
+        console.error(err);
       }
-
       return throwError(() => err);
     })
   );

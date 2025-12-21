@@ -32,8 +32,9 @@ export class UsersDetails {
         Swal.fire('Saved successfully!', '', 'success');
         this.return.emit();
       },
-      error: () => {
-        Swal.fire('Failed to save this user.', '', 'error');
+      error: (err) => {
+        const msg = err.error?.message || 'Failed to create this user.';
+        Swal.fire('Error', msg, 'error');
       },
     });
   }
@@ -44,8 +45,9 @@ export class UsersDetails {
         Swal.fire('Successfully edited!', '', 'success');
         this.return.emit();
       },
-      error: () => {
-        Swal.fire('Failed to update this user.', '', 'error');
+      error: (err) => {
+        const msg = err.error?.message || 'Failed to update this user.';
+        Swal.fire('Error', msg, 'error');
       },
     });
   }

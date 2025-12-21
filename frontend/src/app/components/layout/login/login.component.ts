@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { LoginService } from '../../../auth/services/login.service';
 import { Login } from '../../../auth/login';
+import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -13,10 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  loginAttempt: Login = {
-    username: '',
-    password: '',
-  };
+  loginAttempt: Login = { username: '', password: '' };
 
   router = inject(Router);
   loginService = inject(LoginService);
@@ -30,20 +28,19 @@ export class LoginComponent {
       next: (token) => {
         if (token) {
           this.loginService.addToken(token);
+          Swal.fire('Success', 'Logged in successfully!', 'success');
           this.router.navigate(['/admin/cars']);
         }
       },
       error: (err: HttpErrorResponse) => {
-        if (err.status === 401) {
-          alert('Invalid username or password.');
-        } else if (err.status === 403) {
-          alert('Access denied.');
-        } else if (err.status === 0) {
-          alert('Unable to connect to the server. Please try again later.');
-        } else {
-          alert('An unexpected error occurred. Please try again.');
-        }
-
+        const msg =
+          err.error?.message ||
+          (err.status === 401
+            ? 'Invalid username or password.'
+            : err.status === 403
+            ? 'Access denied.'
+            : err.status === 0 ? 'Unable to connect to the server.' : 'An unexpected error occurred.');
+        Swal.fire('Login Error', msg, 'error');
         console.error('[LOGIN] Authentication error:', err);
       },
     });

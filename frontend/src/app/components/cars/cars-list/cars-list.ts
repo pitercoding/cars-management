@@ -42,7 +42,10 @@ export class CarsList {
   getAllCars(): void {
     this.carService.getAllCars().subscribe({
       next: (cars) => (this.list = cars),
-      error: () => Swal.fire('Failed to retrieve the car list.', '', 'error'),
+      error: (err) => {
+        const msg = err.error?.message || 'Failed to retrieve the car list.';
+        Swal.fire('Error', msg, 'error');
+      },
     });
   }
 
@@ -83,7 +86,10 @@ export class CarsList {
             this.list = this.list.filter((c) => c.id !== car.id);
             Swal.fire('Successfully deleted!', '', 'success');
           },
-          error: () => Swal.fire('Failed to delete this car.', '', 'error'),
+          error: (err) => {
+            const msg = err.error?.message || 'Failed to delete this car.';
+            Swal.fire('Error', msg, 'error');
+          },
         });
       }
     });

@@ -32,8 +32,9 @@ export class AccessoriesDetails {
         Swal.fire('Saved successfully!', '', 'success');
         this.return.emit();
       },
-      error: () => {
-        Swal.fire('Failed to save this accessory.', '', 'error');
+      error: (err) => {
+        const msg = err.error?.message || 'Failed to save.';
+        Swal.fire('Error', msg, 'error');
       },
     });
   }
@@ -44,8 +45,9 @@ export class AccessoriesDetails {
         Swal.fire('Successfully edited!', '', 'success');
         this.return.emit();
       },
-      error: () => {
-        Swal.fire('Failed to update this accessory.', '', 'error');
+      error: (err) => {
+        const msg = err.error?.message || 'Failed to update.';
+        Swal.fire('Error', msg, 'error');
       },
     });
   }
