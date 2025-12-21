@@ -2,6 +2,7 @@ package com.cars.backend.controller;
 
 import com.cars.backend.entity.Brand;
 import com.cars.backend.service.BrandService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,21 +22,9 @@ public class BrandController {
 
     // ========== CREATE ==========
     @PostMapping
-    public ResponseEntity<?> postBrand(@RequestBody Brand brand) {
-        try {
-            Brand savedBrand = brandService.postBrand(brand);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedBrand);
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
-
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body("Tax Identification Number already exists.");
-        }
+    public ResponseEntity<Brand> postBrand(@Valid @RequestBody Brand brand) {
+        Brand savedBrand = brandService.postBrand(brand);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedBrand);
     }
 
     // ========== READ ==========
@@ -51,7 +40,7 @@ public class BrandController {
 
     // ========== UPDATE ==========
     @PutMapping("/{id}")
-    public Brand updateBrand(@PathVariable Long id, @RequestBody Brand brand) {
+    public Brand updateBrand(@PathVariable Long id, @Valid @RequestBody Brand brand) {
         return brandService.updateBrand(brand, id);
     }
 

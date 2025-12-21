@@ -2,6 +2,7 @@ package com.cars.backend.controller;
 
 import com.cars.backend.entity.Car;
 import com.cars.backend.service.CarService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class CarController {
 
     // ========== CREATE ========== //
     @PostMapping
-    public ResponseEntity<Car> postCar(@RequestBody Car car) {
+    public ResponseEntity<Car> postCar(@Valid @RequestBody Car car) {
         return ResponseEntity.status(HttpStatus.CREATED).body(carService.postCar(car));
     }
 
@@ -60,7 +61,7 @@ public class CarController {
 
     // ========== UPDATE ========== //
     @PutMapping("/{id}")
-    public Car updateCar(@PathVariable Long id, @RequestBody Car car) {
+    public Car updateCar(@PathVariable Long id, @Valid @RequestBody Car car) {
         return carService.updateCar(car, id);
     }
 

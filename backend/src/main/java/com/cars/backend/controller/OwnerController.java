@@ -44,7 +44,7 @@ public class OwnerController {
 
     // ========== UPDATE ==========
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateOwner(@PathVariable Long id, @RequestBody Owner owner) {
+    public ResponseEntity<?> updateOwner(@PathVariable Long id, @Valid @RequestBody Owner owner) {
         try {
             Owner updated = ownerService.updateOwner(owner, id);
             return ResponseEntity.ok(updated);

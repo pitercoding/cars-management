@@ -1,5 +1,6 @@
 package com.cars.backend.auth;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,21 +22,9 @@ public class UserController {
     // ========== CREATE ==========
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<?> postUser(@RequestBody User user) {
-        try {
-            User savedUser = userService.postUser(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
-
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body("User already exists.");
-        }
+    public ResponseEntity<User> postUser(@Valid @RequestBody User user) {
+        User savedUser = userService.postUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
     // ========== READ ==========
@@ -54,7 +43,7 @@ public class UserController {
     // ========== UPDATE ==========
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+    public User updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
         return userService.updateUser(user, id);
     }
 

@@ -1,19 +1,25 @@
 package com.cars.backend.auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
-    @Autowired
-    private LoginService loginService;
+
+    private final LoginService loginService;
+
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
+    }
 
     @PostMapping
-    public ResponseEntity<String> signIn(@RequestBody Login login) {
+    public ResponseEntity<String> signIn(@Valid @RequestBody Login login) {
         String token = loginService.signIn(login);
-        return new ResponseEntity<>(token, HttpStatus.OK);
+        return ResponseEntity.ok(token);
     }
 }

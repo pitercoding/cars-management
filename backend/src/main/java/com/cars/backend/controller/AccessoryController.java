@@ -2,6 +2,7 @@ package com.cars.backend.controller;
 
 import com.cars.backend.entity.Accessory;
 import com.cars.backend.service.AccessoryService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class AccessoryController {
 
     // ========== CREATE ==========
     @PostMapping
-    public ResponseEntity<?> postAccessory(@RequestBody Accessory accessory) {
+    public ResponseEntity<?> postAccessory(@Valid @RequestBody Accessory accessory) {
         try {
             Accessory savedAccessory = accessoryService.postAccessory(accessory);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedAccessory);
@@ -51,7 +52,7 @@ public class AccessoryController {
 
     // ========== UPDATE ==========
     @PutMapping("/{id}")
-    public Accessory updateAccessory(@PathVariable Long id, @RequestBody Accessory accessory) {
+    public Accessory updateAccessory(@PathVariable Long id, @Valid @RequestBody Accessory accessory) {
         return accessoryService.updateAccessory(accessory, id);
     }
 

@@ -3,6 +3,7 @@ package com.cars.backend.auth;
 import com.cars.backend.config.JwtServiceGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,8 @@ public class LoginService {
                         login.getPassword()
                 )
         );
-        User user = repository.findByUsername(login.getUsername()).get();
+        User user = repository.findByUsername(login.getUsername())
+                .orElseThrow(() -> new BadCredentialsException("Invalid username or password"));
         String jwtToken = jwtService.generateToken(user);
         return jwtToken;
     }
