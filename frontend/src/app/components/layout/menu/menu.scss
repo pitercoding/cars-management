@@ -12,3 +12,11 @@
   text-transform: none;
 }
 
+.btn-outline-secondary {
+  transition: background-color 0.2s, color 0.2s;
+  color: #ffffff;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #b44f59ff;
+}

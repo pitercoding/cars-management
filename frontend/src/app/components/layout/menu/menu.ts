@@ -77,4 +77,9 @@ export class Menu {
       error: () => Swal.fire('Error', 'Could not update password', 'error'),
     });
   }
+
+  logout(): void {
+    this.loginService.logout();
+    window.location.href = '/login';
+  }
 }

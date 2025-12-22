@@ -20,10 +20,9 @@ export class LoginService {
   }
 
   updatePassword(newPassword: string): Observable<void> {
-    return this.http.put<void>(
-      `${environment.SERVER}/api/users/me/password`,
-      { password: newPassword }
-    );
+    return this.http.put<void>(`${environment.SERVER}/api/users/me/password`, {
+      password: newPassword,
+    });
   }
 
   addToken(token: string): void {
@@ -58,5 +57,9 @@ export class LoginService {
   hasRole(role: string): boolean {
     const user = this.getCurrentUser();
     return !!user && user.role === role;
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
   }
 }
