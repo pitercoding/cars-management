@@ -78,6 +78,13 @@ public class CarService {
     // ========== DELETE ========== //
     public void deleteCar(Long id) {
         Car existing = getCarById(id);
+
+        if (existing.getOwner() != null || !existing.getAccessories().isEmpty()) {
+            throw new IllegalStateException(
+                    "This car cannot be deleted because it has related data (owner or accessories)."
+            );
+        }
+
         carRepository.delete(existing);
     }
 

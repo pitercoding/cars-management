@@ -28,6 +28,7 @@ import { CarService } from '../../../services/car.service';
 export class CarsList {
   list: Car[] = [];
   carEdit: Car = new Car();
+  expandedCarId: number | null = null;
 
   @ViewChild('modalCarsList') modalCarsList!: TemplateRef<any>;
   modalRef!: MdbModalRef<any>;
@@ -39,6 +40,9 @@ export class CarsList {
     this.getAllCars();
   }
 
+  // ======================
+  // LOAD
+  // ======================
   getAllCars(): void {
     this.carService.getAllCars().subscribe({
       next: (cars) => (this.list = cars),
@@ -49,6 +53,9 @@ export class CarsList {
     });
   }
 
+  // ======================
+  // CREATE / EDIT
+  // ======================
   new(): void {
     this.carEdit = new Car({
       name: '',
@@ -58,7 +65,9 @@ export class CarsList {
     });
 
     setTimeout(() => {
-      this.modalRef = this.modalService.open(this.modalCarsList, { modalClass: 'modal-lg' });
+      this.modalRef = this.modalService.open(this.modalCarsList, {
+        modalClass: 'modal-lg',
+      });
     });
   }
 
@@ -66,32 +75,9 @@ export class CarsList {
     this.carEdit = new Car({ ...car });
 
     setTimeout(() => {
-      this.modalRef = this.modalService.open(this.modalCarsList, { modalClass: 'modal-lg' });
-    });
-  }
-
-  deleteById(car: Car): void {
-    if (!car.id) return;
-
-    Swal.fire({
-      title: 'Are you sure?',
-      icon: 'warning',
-      showConfirmButton: true,
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.carService.deleteCar(car.id!).subscribe({
-          next: () => {
-            this.list = this.list.filter((c) => c.id !== car.id);
-            Swal.fire('Successfully deleted!', '', 'success');
-          },
-          error: (err) => {
-            const msg = err.error?.message || 'Failed to delete this car.';
-            Swal.fire('Error', msg, 'error');
-          },
-        });
-      }
+      this.modalRef = this.modalService.open(this.modalCarsList, {
+        modalClass: 'modal-lg',
+      });
     });
   }
 
@@ -99,7 +85,61 @@ export class CarsList {
     if (car) {
       this.getAllCars();
     }
-
     this.modalRef.close();
+  }
+
+  // ======================
+  // DETAILS (ACCORDION)
+  // ======================
+  toggleDetails(car: Car): void {
+    this.expandedCarId = this.expandedCarId === car.id ? null : car.id ?? null;
+  }
+
+  // ======================
+  // DELETE (PROFESSIONAL)
+  // ======================
+  confirmDelete(car: Car): void {
+    const hasOwner = !!car.owner;
+    const hasAccessories = !!car.accessories?.length;
+
+    let message = 'Are you sure you want to delete this car?';
+
+    if (hasOwner || hasAccessories) {
+      message =
+        'This car has related data.\n\n' +
+        'To delete it, you must first remove:\n' +
+        (hasOwner ? '- Owner\n' : '') +
+        (hasAccessories ? '- Accessories\n' : '');
+    }
+
+    Swal.fire({
+      title: 'Confirm deletion',
+      text: message,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteCar(car);
+      }
+    });
+  }
+
+  private deleteCar(car: Car): void {
+    if (!car.id) return;
+
+    this.carService.deleteCar(car.id).subscribe({
+      next: () => {
+        this.list = this.list.filter((c) => c.id !== car.id);
+        Swal.fire('Deleted!', 'Car deleted successfully.', 'success');
+      },
+      error: (err) => {
+        const msg =
+          err.error?.message ||
+          'This car cannot be deleted because it has related data.';
+        Swal.fire('Deletion blocked', msg, 'error');
+      },
+    });
   }
 }
