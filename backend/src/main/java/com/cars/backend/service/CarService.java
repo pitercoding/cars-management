@@ -1,6 +1,7 @@
 package com.cars.backend.service;
 
 import com.cars.backend.entity.Car;
+import com.cars.backend.exception.CarDeletionException;
 import com.cars.backend.repository.CarRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -80,7 +81,7 @@ public class CarService {
         Car existing = getCarById(id);
 
         if (existing.getOwner() != null || !existing.getAccessories().isEmpty()) {
-            throw new IllegalStateException(
+            throw new CarDeletionException(
                     "This car cannot be deleted because it has related data (owner or accessories)."
             );
         }

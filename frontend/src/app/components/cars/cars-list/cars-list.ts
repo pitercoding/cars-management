@@ -119,6 +119,15 @@ export class CarsList {
       showCancelButton: true,
       confirmButtonText: 'Delete',
       cancelButtonText: 'Cancel',
+      didOpen: () => {
+
+        const confirmButton = Swal.getConfirmButton();
+
+        if (hasOwner || hasAccessories) {
+          confirmButton?.setAttribute('disabled', 'true');
+          confirmButton?.classList.add('swal2-disabled');
+        }
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         this.deleteCar(car);
@@ -135,9 +144,7 @@ export class CarsList {
         Swal.fire('Deleted!', 'Car deleted successfully.', 'success');
       },
       error: (err) => {
-        const msg =
-          err.error?.message ||
-          'This car cannot be deleted because it has related data.';
+        const msg = err.error?.message || 'This car cannot be deleted because it has related data.';
         Swal.fire('Deletion blocked', msg, 'error');
       },
     });
