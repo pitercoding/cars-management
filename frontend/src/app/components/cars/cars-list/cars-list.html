@@ -37,9 +37,12 @@
                     type="button"
                     class="btn btn-outline-info btn-sm me-2"
                     mdRipple
+                    [class.open]="expandedCarId === car.id"
                     (click)="toggleDetails(car)"
                   >
-                    Details
+                    <span *ngIf="expandedCarId !== car.id">+</span>
+                    <span *ngIf="expandedCarId === car.id">−</span>
+                    {{ expandedCarId === car.id ? 'Hide Details' : 'Details' }}
                   </button>
 
                   <button type="button" class="btn btn-primary btn-sm" mdRipple (click)="edit(car)">
@@ -80,7 +83,6 @@
                       Delete Car
                     </button>
                   </div>
-                  
                 </td>
               </tr>
               } }
