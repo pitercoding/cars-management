@@ -28,10 +28,11 @@
                 <td>{{ brand.id }}</td>
                 <td>{{ brand.name }}</td>
                 <td>{{ brand.taxIdentificationNumber }}</td>
+
                 <td class="toright">
                   <button
                     type="button"
-                    class="btn btn-primary btn-rounded"
+                    class="btn btn-primary btn-sm me-2"
                     mdRipple
                     (click)="edit(brand)"
                   >
@@ -39,7 +40,7 @@
                   </button>
                   <button
                     type="button"
-                    class="btn btn-danger btn-rounded"
+                    class="btn btn-danger btn-sm"
                     mdRipple
                     (click)="deleteById(brand)"
                   >

@@ -3,6 +3,10 @@
 @use '@fortawesome/fontawesome-free/css/all.css';
 @use 'mdb-angular-ui-kit/assets/scss/mdb.scss';
 
+body {
+  background-color: antiquewhite;
+}
+
 .tocenter {
   text-align: center;
 }
@@ -11,9 +15,14 @@
   text-align: right;
 }
 
-body {
-  background-color: antiquewhite;
+.btn-sm {
+  min-width: 80px;
 }
+
+.me-2 {
+  margin-right: 0.5rem;
+}
+
 
 .swal2-container {
   z-index: 9999 !important;
