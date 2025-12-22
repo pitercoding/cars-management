@@ -81,7 +81,7 @@
         <button type="button" class="btn btn-primary me-3 welcome-btn">
           Welcome, {{ user.username || 'Guest' }}
         </button>
-        <a class="btn btn-success px-3" role="button">Change Password</a>
+        <a class="btn btn-success px-3" role="button" (click)="changePassword()">Change Password</a>
       </div>
     </div>
     <!-- Collapsible wrapper -->

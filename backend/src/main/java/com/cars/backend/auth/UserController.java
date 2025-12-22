@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,5 +55,19 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+
+    // ========== PASSWORD ==========
+    @PutMapping("/me/password")
+    public ResponseEntity<Void> updateMyPassword(
+            @Valid @RequestBody ChangePasswordDTO dto,
+            Authentication auth) {
+
+        User currentUser = (User) auth.getPrincipal();
+
+        userService.updatePassword(currentUser.getId(), dto.getPassword());
+
+        return ResponseEntity.ok().build();
+    }
+
 }
 

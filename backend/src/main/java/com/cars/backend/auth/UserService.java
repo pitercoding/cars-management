@@ -136,4 +136,15 @@ public class UserService {
         User existing = getUserEntityById(id);
         userRepository.delete(existing);
     }
+
+    // =========================
+    // PASSWORD
+    // =========================
+    public void updatePassword(Long userId, String newPassword) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
 }
