@@ -45,10 +45,6 @@
           <a class="nav-link" routerLink="/admin/users" routerLinkActive="active"> Users </a>
         </li>
         }
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/login"> Logout </a>
-        </li>
       </ul>
 
       <!-- Right links -->
@@ -57,12 +53,11 @@
         <button type="button" class="btn btn-primary me-2 welcome-btn">
           Welcome, {{ user.username || 'Guest' }}
         </button>
-        <a class="btn btn-success px-3 me-2" role="button" (click)="changePassword()"
+        <a class="btn btn-dark px-3 me-2" role="button" (click)="changePassword()"
           >Change Password</a
         >
         <a class="btn btn-outline-secondary px-3" role="button" (click)="logout()"> Logout </a>
       </div>
-
     </div>
   </div>
 </nav>

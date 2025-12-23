@@ -1,28 +1,118 @@
-/* You can add global styles to this file, and also import other style files */
+/* =========================
+   IMPORTS
+========================= */
 
 @use '@fortawesome/fontawesome-free/css/all.css';
 @use 'mdb-angular-ui-kit/assets/scss/mdb.scss';
+
+/* =========================
+   GLOBAL LAYOUT ADJUSTMENTS
+========================= */
 
 body {
   background-color: antiquewhite;
 }
 
+/* Utility helpers */
 .tocenter {
   text-align: center;
 }
 
-.toright {
-  text-align: right;
+/* =========================
+   TABLES
+========================= */
+
+.table {
+  width: 100%;
+  table-layout: auto; /* colunas ajustam ao conteúdo */
 }
 
-.btn-sm {
-  min-width: 80px;
+.table th,
+.table td {
+  white-space: nowrap; /* impede quebra de linha em textos curtos */
+  vertical-align: middle; /* centraliza verticalmente */
 }
 
-.me-2 {
-  margin-right: 0.5rem;
+.table thead th {
+  white-space: nowrap;
 }
 
+/* =========================
+   ACTIONS COLUMN
+========================= */
+
+/* Container dos botões de ação */
+.actions-cell {
+  display: flex;
+  justify-content: center; /* centraliza horizontalmente */
+  align-items: center; /* centraliza verticalmente */
+  gap: 0.25rem; /* espaçamento entre botões */
+  white-space: nowrap;
+}
+
+/* Botões com tamanho apenas do ícone */
+.actions-cell .btn {
+  min-width: 0; /* sem largura fixa */
+  width: auto; /* ajusta ao conteúdo */
+  padding: 0.25rem 0.5rem; /* padding compacto para ícones */
+  font-size: 0.9rem;
+}
+
+/* Botão de detalhes específico */
+.actions-cell .btn-details {
+  padding: 0.25rem 0.5rem;
+}
+
+/* Cabeçalho da coluna Actions */
+.table thead th.actions-cell-header {
+  text-align: center; /* título centralizado */
+  width: 1%; /* ocupa apenas o espaço necessário */
+}
+
+/* =========================
+   RESPONSIVE TABLES
+========================= */
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .actions-cell {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .actions-cell .btn {
+    width: 100%;
+  }
+}
+
+/* =========================
+   CAR DETAILS (OPEN STATE)
+========================= */
+
+button.open {
+  background-color: #e0f7fa;
+  border-color: #26c6da;
+  font-weight: 600;
+}
+
+/* =========================
+   CARDS & SPACING
+========================= */
+
+.card {
+  margin-bottom: 1.5rem;
+}
+
+.card-body h3 {
+  margin-bottom: 1rem;
+}
+
+/* =========================
+   SWEETALERT FIX
+========================= */
 
 .swal2-container {
   z-index: 9999 !important;

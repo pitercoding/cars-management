@@ -6,60 +6,70 @@
         <div class="card-body">
           <h3>Brands List</h3>
 
-          <div class="toright">
-            <button type="button" class="btn btn-primary btn-rounded" mdRipple (click)="new()">
+          <!-- ACTION: NEW -->
+          <div class="d-flex justify-content-end mb-3">
+            <button type="button" class="btn btn-success btn-rounded" mdRipple (click)="new()">
               New
             </button>
           </div>
-          <br />
 
-          <table border="1" class="table table-striped">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Tax ID</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (brand of list; track brand.id) {
-              <tr>
-                <td>{{ brand.id }}</td>
-                <td>{{ brand.name }}</td>
-                <td>{{ brand.taxIdentificationNumber }}</td>
+          <div class="table-responsive">
+            <table border="1" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Tax ID</th>
+                  <th class="actions-cell-header">Actions</th>
+                </tr>
+              </thead>
 
-                <td class="toright">
-                  <button
-                    type="button"
-                    class="btn btn-primary btn-sm me-2"
-                    mdRipple
-                    (click)="edit(brand)"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger btn-sm"
-                    mdRipple
-                    (click)="deleteById(brand)"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-              }
-            </tbody>
-          </table>
+              <tbody>
+                @for (brand of list; track brand.id) {
+                <tr>
+                  <td>{{ brand.id }}</td>
+                  <td>{{ brand.name }}</td>
+                  <td>{{ brand.taxIdentificationNumber }}</td>
+
+                  <!-- ACTIONS -->
+                  <td class="actions-cell">
+                    <!-- EDIT -->
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm"
+                      mdRipple
+                      title="Edit"
+                      (click)="edit(brand)"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </button>
+
+                    <!-- DELETE -->
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-sm"
+                      mdRipple
+                      title="Delete"
+                      (click)="deleteById(brand)"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- MODAL -->
 <ng-template #modalBrandsList>
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Add New Brand</h5>
+    <h5 class="modal-title">Add New Brand</h5>
     <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
   </div>
   <div class="modal-body">

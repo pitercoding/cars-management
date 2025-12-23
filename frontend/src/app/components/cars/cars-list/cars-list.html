@@ -6,97 +6,108 @@
         <div class="card-body">
           <h3>Cars List</h3>
 
-          <div class="toright">
-            <button type="button" class="btn btn-primary btn-rounded" mdRipple (click)="new()">
+          <!-- ACTION: NEW -->
+          <div class="d-flex justify-content-end mb-3">
+            <button type="button" class="btn btn-success btn-rounded" mdRipple (click)="new()">
               New
             </button>
           </div>
-          <br />
 
-          <table border="1" class="table table-striped">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Model</th>
-                <th>Manufacture Year</th>
-                <th>Brand</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (car of list; track car.id) {
-              <tr>
-                <td>{{ car.id }}</td>
-                <td>{{ car.name }}</td>
-                <td>{{ car.model }}</td>
-                <td>{{ car.manufactureYear }}</td>
-                <td>{{ car.brand?.name }}</td>
-                <td class="toright">
-                  <button
-                    type="button"
-                    class="btn btn-outline-info btn-sm me-2"
-                    mdRipple
-                    [class.open]="expandedCarId === car.id"
-                    (click)="toggleDetails(car)"
-                  >
-                    <span *ngIf="expandedCarId !== car.id">+</span>
-                    <span *ngIf="expandedCarId === car.id">−</span>
-                    {{ expandedCarId === car.id ? 'Hide Details' : 'Details' }}
-                  </button>
-
-                  <button type="button" class="btn btn-primary btn-sm" mdRipple (click)="edit(car)">
-                    Edit
-                  </button>
-                </td>
-              </tr>
-
-              <!-- Details (ACCORDION STYLE) -->
-              @if (expandedCarId === car.id) {
-              <tr class="bg-light">
-                <td colspan="6">
-                  <!-- OWNER -->
-                  <strong>Owner</strong><br />
-                  @if (car.owner) {
-                  {{ car.owner.fullName }}
-                  <small class="text-muted"> — DL: {{ car.owner.driversLicense }} </small>
-                  } @else {
-                  <span class="text-muted">Unassigned</span>
-                  }
-
-                  <hr />
-
-                  <!-- ACCESSORIES -->
-                  <strong>Accessories</strong>
-                  <ul class="mb-0">
-                    @if (car.accessories.length) { @for (acc of car.accessories; track acc.id) {
-                    <li>{{ acc.name }}</li>
-                    } } @else {
-                    <li class="text-muted">No accessories</li>
-                    }
-                  </ul>
-
-                  <hr />
-
-                  <div class="d-flex justify-content-end gap-2">
-                    <button class="btn btn-danger btn-sm" mdRipple (click)="confirmDelete(car)">
-                      Delete Car
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Model</th>
+                  <th>Manufacture Year</th>
+                  <th>Brand</th>
+                  <th class="actions-cell-header">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (car of list; track car.id) {
+                <tr>
+                  <td>{{ car.id }}</td>
+                  <td>{{ car.name }}</td>
+                  <td>{{ car.model }}</td>
+                  <td>{{ car.manufactureYear }}</td>
+                  <td>{{ car.brand?.name }}</td>
+                  <!-- ACTIONS -->
+                  <td class="actions-cell">
+                    <!-- DETAILS -->
+                    <button
+                      type="button"
+                      class="btn btn-outline-info btn-sm btn-details"
+                      mdRipple
+                      title="Details"
+                      [class.open]="expandedCarId === car.id"
+                      (click)="toggleDetails(car)"
+                    >
+                      <i
+                        class="fas"
+                        [class.fa-eye]="expandedCarId !== car.id"
+                        [class.fa-eye-slash]="expandedCarId === car.id"
+                      ></i>
                     </button>
-                  </div>
-                </td>
-              </tr>
-              } }
-            </tbody>
-          </table>
+                    <!-- EDIT -->
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm"
+                      mdRipple
+                      title="Edit"
+                      (click)="edit(car)"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </td>
+                </tr>
+                <!-- DETAILS (ACCORDION STYLE) -->
+                @if (expandedCarId === car.id) {
+                <tr class="bg-light">
+                  <td colspan="6">
+                    <!-- OWNER -->
+                    <strong>Owner</strong><br />
+                    @if (car.owner) {
+                    {{ car.owner.fullName }}
+                    <small class="text-muted"> — DL: {{ car.owner.driversLicense }} </small>
+                    } @else {
+                    <span class="text-muted">Unassigned</span>
+                    }
+                    <hr />
+                    <!-- ACCESSORIES -->
+                    <strong>Accessories</strong>
+                    <ul class="mb-0">
+                      @if (car.accessories.length) { @for (acc of car.accessories; track acc.id) {
+                      <li>{{ acc.name }}</li>
+                      } } @else {
+                      <li class="text-muted">No accessories</li>
+                      }
+                    </ul>
+                    <hr />
+                    <!-- DELETE -->
+                    <div class="d-flex justify-content-end gap-2">
+                      <button class="btn btn-danger btn-sm" mdRipple (click)="confirmDelete(car)">
+                        <i class="fas fa-trash me-1"></i>
+                        Delete Car
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                } }
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- MODAL -->
 <ng-template #modalCarsList>
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Add New Car</h5>
+    <h5 class="modal-title">Add New Car</h5>
     <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
   </div>
   <div class="modal-body">
