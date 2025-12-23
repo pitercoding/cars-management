@@ -24,13 +24,13 @@ body {
 
 .table {
   width: 100%;
-  table-layout: auto; /* colunas ajustam ao conteúdo */
+  table-layout: auto;
 }
 
 .table th,
 .table td {
-  white-space: nowrap; /* impede quebra de linha em textos curtos */
-  vertical-align: middle; /* centraliza verticalmente */
+  white-space: nowrap;
+  vertical-align: middle;
 }
 
 .table thead th {
@@ -41,32 +41,28 @@ body {
    ACTIONS COLUMN
 ========================= */
 
-/* Container dos botões de ação */
 .actions-cell {
   display: flex;
-  justify-content: center; /* centraliza horizontalmente */
-  align-items: center; /* centraliza verticalmente */
-  gap: 0.25rem; /* espaçamento entre botões */
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
   white-space: nowrap;
 }
 
-/* Botões com tamanho apenas do ícone */
 .actions-cell .btn {
-  min-width: 0; /* sem largura fixa */
-  width: auto; /* ajusta ao conteúdo */
-  padding: 0.25rem 0.5rem; /* padding compacto para ícones */
+  min-width: 0;
+  width: auto;
+  padding: 0.25rem 0.5rem;
   font-size: 0.9rem;
 }
 
-/* Botão de detalhes específico */
 .actions-cell .btn-details {
   padding: 0.25rem 0.5rem;
 }
 
-/* Cabeçalho da coluna Actions */
 .table thead th.actions-cell-header {
-  text-align: center; /* título centralizado */
-  width: 1%; /* ocupa apenas o espaço necessário */
+  text-align: center;
+  width: 1%;
 }
 
 /* =========================
