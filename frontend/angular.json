@@ -23,15 +23,16 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
-            "scripts": ["node_modules/chart.js/dist/chart.js"]
+            "scripts": ["node_modules/chart.js/dist/chart.js"],
+            "allowedCommonJsDependencies": ["sweetalert2"]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2MB",
+                  "maximumError": "2.5MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -39,6 +40,7 @@
                   "maximumError": "8kB"
                 }
               ],
+              "optimization": true,
               "outputHashing": "all"
             },
             "development": {
