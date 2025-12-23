@@ -1,9 +1,12 @@
+/* =========================
+   GENERAL
+========================= */
 .navbar .nav-link.active {
   font-weight: 600;
   color: #fff;
 }
 
-.navbar-brand img {
+.navbar-brand img.logo {
   max-height: 48px;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
@@ -15,8 +18,130 @@
 .btn-outline-secondary {
   transition: background-color 0.2s, color 0.2s;
   color: #ffffff;
+
+  &:hover {
+    background-color: #b44f59ff;
+  }
 }
 
-.btn-outline-secondary:hover {
-  background-color: #b44f59ff;
+/* =========================
+   HAMBURGER & COLLAPSED MENU
+========================= */
+.navbar-toggler {
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, transform 0.2s;
+
+  &:hover {
+    color: #ffd700;
+    transform: scale(1.1);
+  }
+}
+
+/* =========================
+   COLLAPSE MENU RESPONSIVE (MOBILE)
+========================= */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    position: absolute;
+    top: 56px;
+    left: 0;
+    width: 100%;
+    background-color: #007bff;
+    padding: 0.5rem 0;
+    z-index: 1050;
+
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+    .navbar-nav {
+      flex-direction: column;
+      width: 100%;
+      text-align: center;
+
+      .nav-item {
+        width: 100%;
+
+        .nav-link {
+          display: block;
+          width: 90%;
+          margin: 0 auto;
+          padding: 0.75rem 1rem;
+          color: #fff;
+          border-radius: 8px;
+          transition: background-color 0.2s, transform 0.2s;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: scale(1.02);
+          }
+        }
+      }
+    }
+
+    /* MENU BUTTONS (Welcome, Change Password, Logout) */
+    .menu-buttons {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+
+      button,
+      a.btn {
+        width: 90%;
+        max-width: 300px;
+        text-align: center;
+        border-radius: 8px;
+        transition: filter 0.2s, transform 0.2s;
+
+        &:hover {
+          filter: brightness(1.1);
+          transform: scale(1.02);
+        }
+      }
+    }
+  }
+
+  .navbar-toggler {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+
+/* =========================
+   DESKTOP MENU (ABOVE 991PX)
+========================= */
+@media (min-width: 992px) {
+  .navbar-toggler {
+    display: none;
+  }
+
+  /* Navbar links */
+  .navbar-nav .nav-item .nav-link {
+    color: #fff;
+    border-radius: 8px;
+    transition: background-color 0.2s, transform 0.2s;
+
+    &:hover,
+    &.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: scale(1.02);
+    }
+  }
+
+  /* Right buttons */
+  .menu-buttons button,
+  .menu-buttons a.btn {
+    border-radius: 8px;
+    transition: filter 0.2s, transform 0.2s;
+
+    &:hover {
+      filter: brightness(1.1);
+      transform: scale(1.02);
+    }
+  }
 }
