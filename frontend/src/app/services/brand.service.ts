@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Brand } from '../models/brand';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BrandService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/brands';
+  private apiUrl = environment.SERVER + "/api/brands";
 
   getAllBrands(): Observable<Brand[]> {
     return this.http.get<Brand[]>(`${this.apiUrl}`);

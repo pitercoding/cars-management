@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Accessory } from '../models/accessory';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccessoryService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/accessories';
+  private apiUrl = environment.SERVER + "/api/accessories";
 
   getAllAccessories(): Observable<Accessory[]> {
     return this.http.get<Accessory[]>(`${this.apiUrl}`);

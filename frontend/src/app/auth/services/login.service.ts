@@ -11,10 +11,10 @@ import { environment } from '../../../environments/environment';
 })
 export class LoginService {
   private http = inject(HttpClient);
-  private API = environment.SERVER + '/api/login';
+  private apiUrl = environment.SERVER + '/api/login';
 
   login(credentials: Login): Observable<string> {
-    return this.http.post<string>(this.API, credentials, {
+    return this.http.post<string>(this.apiUrl, credentials, {
       responseType: 'text' as 'json',
     });
   }
