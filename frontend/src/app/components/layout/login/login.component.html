@@ -1,27 +1,35 @@
-<div class="container">
-  <div class="row">
-    <div class="col-lg-4"></div>
+<div class="login-page">
+  <div class="login-card">
+    <h3 class="login-title">Sign In</h3>
 
-    <div class="col-lg-4 tocenter totop">
-      <div class="card">
-        <div class="card-body">
-          <h3>Sign In</h3>
-          <br>
-          <mdb-form-control>
-            <input mdbInput type="text" id="user" class="form-control" name="username" [(ngModel)]="loginAttempt.username" (keyup.enter)="logon()" />
-            <label mdbLabel class="form-label" for="user">User</label>
-          </mdb-form-control>
-          <br />
-          <mdb-form-control>
-            <input mdbInput type="password" id="password" class="form-control" name="password" [(ngModel)]="loginAttempt.password" (keyup.enter)="logon()" />
-            <label mdbLabel class="form-label" for="password">Password</label>
-          </mdb-form-control>
-          <br />
-          <button type="button" class="btn btn-primary btn-rounded" mdRipple (click)="logon()">Log On</button>
-        </div>
-      </div>
-    </div>
+    <mdb-form-control class="mb-3">
+      <input
+        mdbInput
+        type="text"
+        id="user"
+        class="form-control"
+        name="username"
+        [(ngModel)]="loginAttempt.username"
+        (keyup.enter)="logon()"
+      />
+      <label mdbLabel class="form-label" for="user">Username</label>
+    </mdb-form-control>
 
-    <div class="col-lg-4"></div>
+    <mdb-form-control class="mb-4">
+      <input
+        mdbInput
+        type="password"
+        id="password"
+        class="form-control"
+        name="password"
+        [(ngModel)]="loginAttempt.password"
+        (keyup.enter)="logon()"
+      />
+      <label mdbLabel class="form-label" for="password">Password</label>
+    </mdb-form-control>
+
+    <button type="button" class="btn btn-primary w-100 btn-login" mdRipple (click)="logon()">
+      Log in
+    </button>
   </div>
 </div>
