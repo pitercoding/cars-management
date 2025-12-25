@@ -34,4 +34,8 @@ ENV SPRING_PROFILES_ACTIVE=prod
 EXPOSE 8080
 
 # Comando de inicialização
-ENTRYPOINT ["java", "-jar", "./app.jar"]
+ENTRYPOINT ["java", "-jar", "./app.jar", \
+            "--server.port=${PORT}", \
+            "-Dspring.datasource.url=${SPRING_DATASOURCE_URL}", \
+            "-Dspring.datasource.username=${SPRING_DATASOURCE_USERNAME}", \
+            "-Dspring.datasource.password=${SPRING_DATASOURCE_PASSWORD}"]
