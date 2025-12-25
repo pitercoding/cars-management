@@ -12,45 +12,50 @@ import { UsersDetails } from './auth/components/users-details/users-details';
 import { OwnersList } from './components/owners/owners-list/owners-list';
 import { OwnersDetails } from './components/owners/owners-details/owners-details';
 import { loginGuard } from './auth/guards/login-guard';
+import { adminGuard } from './auth/guards/role.guard';
+import { authGuard } from './auth/guards/auth.guard';
 
 export const routes: Routes = [
-  { path: "", redirectTo: "login", pathMatch: 'full' },
-  { path: "login", component: LoginComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+
   {
-    path: "admin",
+    path: 'admin',
     component: MainContent,
-    canActivate: [loginGuard], // mantém o guard geral
+    canActivate: [authGuard],
     children: [
-      { path: "cars", component: CarsList },
-      { path: "cars/new", component: CarsDetails },
-      { path: "cars/edit/:id", component: CarsDetails },
-      { path: "brands", component: BrandsList },
-      { path: "brands/new", component: BrandsDetails },
-      { path: "brands/edit/:id", component: BrandsDetails },
-      { path: "accessories", component: AccessoriesList },
-      { path: "accessories/new", component: AccessoriesDetails },
-      { path: "accessories/edit/:id", component: AccessoriesDetails },
+      { path: 'cars', component: CarsList },
+      { path: 'cars/new', component: CarsDetails },
+      { path: 'cars/edit/:id', component: CarsDetails },
 
-      // Usuários com guard direto
+      { path: 'brands', component: BrandsList },
+      { path: 'brands/new', component: BrandsDetails },
+      { path: 'brands/edit/:id', component: BrandsDetails },
+
+      { path: 'accessories', component: AccessoriesList },
+      { path: 'accessories/new', component: AccessoriesDetails },
+      { path: 'accessories/edit/:id', component: AccessoriesDetails },
+
+      // 🔒 ADMIN ONLY
       {
-        path: "users",
+        path: 'users',
         component: UsersList,
-        canActivate: [loginGuard],
+        canActivate: [adminGuard],
       },
       {
-        path: "users/new",
+        path: 'users/new',
         component: UsersDetails,
-        canActivate: [loginGuard],
+        canActivate: [adminGuard],
       },
       {
-        path: "users/edit/:id",
+        path: 'users/edit/:id',
         component: UsersDetails,
-        canActivate: [loginGuard],
+        canActivate: [adminGuard],
       },
 
-      { path: "owners", component: OwnersList },
-      { path: "owners/new", component: OwnersDetails },
-      { path: "owners/edit/:id", component: OwnersDetails }
-    ]
-  }
+      { path: 'owners', component: OwnersList },
+      { path: 'owners/new', component: OwnersDetails },
+      { path: 'owners/edit/:id', component: OwnersDetails },
+    ],
+  },
 ];
