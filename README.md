@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="frontend/src/assets/images/logo-light.png" alt="Logo Cars Management" width="40" style="vertical-align: middle; margin-right: 10px;">
+  <img src="frontend/src/logo-light.png" alt="Logo Cars Management" width="40" style="vertical-align: middle; margin-right: 10px;">
   Cars Management
 </h1>
 
@@ -171,3 +171,4 @@ This project is licensed under the **MIT License** — feel free to use, study, 
 **Piter Gomes** — Computer Science Student (5th Semester) & Full-Stack Developer
 
 📧 [Email](mailto:piterg.bio@gmail.com) | 💼 [LinkedIn](https://www.linkedin.com/in/piter-gomes-4a39281a1/) | 💻 [GitHub](https://github.com/pitercoding) | 🌐 [Portfolio](https://portfolio-pitergomes.vercel.app/)
+
