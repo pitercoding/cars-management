@@ -3,7 +3,12 @@
   Cars Management
 </h1>
 
-## 🧠 Description
+<p align="center">
+  🌎 <strong>Languages:</strong><br>
+  <a href="README.pt.md">🇧🇷 Portuguese</a> |
+  <a href="README.md">🇺🇸 English</a>
+</p>
+
 **Cars Management** is a full-stack application designed to manage car sales, brands, accessories, and owners. Users can perform CRUD operations on cars, brands, owners, and accessories, with secure authentication and role-based permissions for admins.  
 
 The application also includes **robust validation**, **centralized error handling**, and dynamic **frontend-backend integration**.
@@ -12,8 +17,8 @@ The application also includes **robust validation**, **centralized error handlin
 
 The backend and frontend are deployed in multiple environments:
 
-- **Backend:** [Render](https://render.com) (hibernates on free tier)
-- **Frontend:** [Vercel](https://vercel.com)
+- **Backend:** [Render](https://cars-management-co0d.onrender.com) (hibernates on free tier)
+- **Frontend:** [Vercel](https://cars-management-six.vercel.app/)
 - **Deployment practice:** AWS (experience of deploying Spring Boot and Angular app to the cloud)
 
 ### Steps to run locally
@@ -171,4 +176,3 @@ This project is licensed under the **MIT License** — feel free to use, study, 
 **Piter Gomes** — Computer Science Student (5th Semester) & Full-Stack Developer
 
 📧 [Email](mailto:piterg.bio@gmail.com) | 💼 [LinkedIn](https://www.linkedin.com/in/piter-gomes-4a39281a1/) | 💻 [GitHub](https://github.com/pitercoding) | 🌐 [Portfolio](https://portfolio-pitergomes.vercel.app/)
-
