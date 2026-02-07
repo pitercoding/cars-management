@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="frontend/src/logo-light.png" alt="Logo Cars Management" width="40" style="vertical-align: middle; margin-right: 10px;">
+  <img src="frontend/src/assets/images/logo-light.png" alt="Logo Cars Management" width="40" style="vertical-align: middle; margin-right: 10px;">
   Cars Management
 </h1>
 
@@ -15,17 +15,18 @@ A aplicação também inclui **validação robusta**, **tratamento centralizado 
 
 ## 🚀 Como Acessar o Projeto
 
-O backend e o frontend estão implantados em múltiplos ambientes:
+O stack de produção está hospedado em:
 
-- **Backend:** [Render](https://cars-management-co0d.onrender.com) (hiberna no plano gratuito)
-- **Frontend:** [Vercel](https://cars-management-six.vercel.app/)
-- **Prática de deploy:** AWS (experiência em implantar aplicações Spring Boot e Angular na nuvem)
+- **Backend:** Render (https://cars-management-co0d.onrender.com) (hiberna no plano gratuito)
+- **Frontend:** Vercel (https://cars-management-drab.vercel.app)
+- **Banco de dados:** Aiven MySQL (free tier)
+- **Prática de deploy:** Inicialmente implantado na AWS para aprendizado, mas a produção final usa Render + Vercel + Aiven para evitar custos.
 
 ### Passos para rodar localmente
 
 1. Clone o repositório:
 ```bash
-git clone [https://github.com/pitercoding/cars-management.git](https://github.com/pitercoding/cars-management.git)
+git clone https://github.com/pitercoding/cars-management.git
 cd cars-management
 ```
 2. Backend:  
@@ -53,7 +54,7 @@ Durante o desenvolvimento, fortaleci habilidades em:
 - **Frontend:** Angular, TypeScript, SCSS, MDB Angular UI Kit, roteamento, interceptadores HTTP.
 - **Backend:** Spring Boot, Spring Security, autenticação JWT, tratamento centralizado de exceções.
 - **Banco de Dados:** MySQL, design de repositórios, relacionamentos.
-- **Deploy & Nuvem:** Experiência implantando na AWS, usando Render para o backend e Vercel para o frontend para evitar custos.
+- **Deploy & Nuvem:** Experiência na AWS e, no setup final gratuito, Render (backend), Vercel (frontend) e Aiven (MySQL).
 - **Testes & Validação:** Testes unitários, cobertura de código com JaCoCo, validações de formulários no frontend.
 
 ---
@@ -66,7 +67,7 @@ Durante o desenvolvimento, fortaleci habilidades em:
 | Backend    | Spring Boot           | API REST com logs, autenticação, validação e tratamento de exceções              |
 | Banco de Dados | SQL               | Armazena carros, proprietários, marcas, acessórios                               |
 | Autenticação | JWT + Spring Security | Login seguro, gerenciamento de cargos (admin), alteração de senha                |
-| Deploy     | AWS / Render / Vercel | Hospedagem e implantação em nuvem                                                |
+| Deploy     | Render / Vercel / Aiven | Hospedagem e implantação em nuvem                                              |
 
 ---
 
@@ -95,7 +96,8 @@ Durante o desenvolvimento, fortaleci habilidades em:
 ### Deployment
 - Backend implantado no Render  
 - Frontend implantado na Vercel  
-- Configuração do projeto e prática de deploy na AWS (Será cancelado para evitar despesas)
+- Banco de dados hospedado no Aiven MySQL (free tier)  
+- Prática inicial de deploy na AWS (substituída para evitar despesas)
 
 ---
 
@@ -138,7 +140,7 @@ Banco de Dados (SQL)
 | Integração     | ✅ Testada    | Comunicação Frontend ↔ Backend via HTTP              |
 | Banco de Dados | ✅ Operacional| Conectado e sincronizado                             |
 | Autenticação   | ✅ Implementada| JWT + UI baseada em cargos + Alteração de senha      |
-| Deploy         | ✅ Concluído  | Backend → Render, Frontend → Vercel, experiência com AWS |
+| Deploy         | ✅ Concluído  | Backend → Render, Frontend → Vercel, Banco → Aiven, experiência com AWS |
 
 ## 📂 Estrutura de Pastas
 ```bash

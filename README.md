@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="frontend/src/logo-light.png" alt="Logo Cars Management" width="40" style="vertical-align: middle; margin-right: 10px;">
+  <img src="frontend/src/assets/images/logo-light.png" alt="Logo Cars Management" width="40" style="vertical-align: middle; margin-right: 10px;">
   Cars Management
 </h1>
 
@@ -15,11 +15,12 @@ The application also includes **robust validation**, **centralized error handlin
 
 ## 🚀 How to Access the Project
 
-The backend and frontend are deployed in multiple environments:
+The production stack is hosted across:
 
-- **Backend:** [Render](https://cars-management-co0d.onrender.com) (hibernates on free tier)
-- **Frontend:** [Vercel](https://cars-management-six.vercel.app/)
-- **Deployment practice:** AWS (experience of deploying Spring Boot and Angular app to the cloud)
+- **Backend:** Render (https://cars-management-co0d.onrender.com) (hibernates on free tier)
+- **Frontend:** Vercel (https://cars-management-drab.vercel.app)
+- **Database:** Aiven MySQL (free tier)
+- **Deployment practice:** Initially deployed on AWS for learning, but the final production setup uses Render + Vercel + Aiven to avoid costs.
 
 ### Steps to run locally
 
@@ -51,7 +52,7 @@ During development, I strengthened skills in:
 - **Frontend:** Angular, TypeScript, SCSS, MDB Angular UI Kit, routing, HTTP interceptors.
 - **Backend:** Spring Boot, Spring Security, JWT authentication, centralized exception handling.
 - **Database:** MySQL, repository design, relationships.
-- **Deployment & Cloud:** Experience deploying to AWS, using Render for backend and Vercel for frontend to avoid costs.
+- **Deployment & Cloud:** Experience deploying to AWS, then using Render (backend), Vercel (frontend), and Aiven (MySQL) for the final free-tier setup.
 - **Testing & Validation:** Unit tests, code coverage with JaCoCo, frontend form validations.
 
 ---
@@ -64,7 +65,7 @@ During development, I strengthened skills in:
 | Backend    | Spring Boot        | REST API with logging, authentication, validation, and exception handling |
 | Database   | SQL      | Stores cars, owners, brands, accessories                           |
 | Auth       | JWT + Spring Security | Secure login, admin role management, password change            |
-| Deployment | AWS / Render / Vercel | Cloud deployment and hosting                                      |
+| Deployment | Render / Vercel / Aiven | Cloud deployment and hosting                                    |
 
 ---
 
@@ -93,7 +94,8 @@ During development, I strengthened skills in:
 ### Deployment
 - Backend deployed on Render  
 - Frontend deployed on Vercel  
-- Project setup and deployment practice on AWS (It will be cancelled to avoid expenses)
+- Database hosted on Aiven MySQL (free tier)  
+- Initial deployment practice on AWS (later replaced to avoid costs)
 
 ---
 
@@ -136,7 +138,7 @@ Database (SQL)
 | Integration    | ✅ Tested     | Frontend ↔ Backend communication via HTTP           |
 | Database       | ✅ Operational| Connected and synchronized                           |
 | Authentication | ✅ Implemented| JWT + Role-based UI + Password change               |
-| Deployment     | ✅ Done       | Backend → Render, Frontend → Vercel, AWS deployment experience |
+| Deployment     | ✅ Done       | Backend → Render, Frontend → Vercel, Database → Aiven, AWS deployment experience |
 
 ## 📂 Folder Structure
 ```bash
