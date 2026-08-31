@@ -7,7 +7,7 @@ export const loginGuard: CanActivateFn = (route, state) => {
   const loginService = inject(LoginService);
   const router = inject(Router);
 
-  if (loginService.hasRole('STANDARD_USER') && state.url === '/admin/users') {
+  if (loginService.hasRole('ROLE_STANDARD_USER') && state.url === '/admin/users') {
     Swal.fire('Access Denied', 'You do not have permission to access this route.', 'warning')
       .then(() => router.navigate(['/admin/cars']));
     return false;

@@ -7,7 +7,7 @@ export const adminGuard: CanActivateFn = () => {
   const loginService = inject(LoginService);
   const router = inject(Router);
 
-  if (!loginService.hasRole('ADMIN')) {
+  if (!loginService.hasRole('ROLE_ADMIN')) {
     Swal.fire('Access Denied', 'Admin access only', 'warning')
       .then(() => router.navigate(['/admin/cars']));
     return false;
