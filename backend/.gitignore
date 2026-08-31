@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Local dev secrets (per-developer overrides, never committed) ###
-config/
+/config/
