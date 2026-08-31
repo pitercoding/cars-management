@@ -1,6 +1,7 @@
 package com.cars.backend.controller;
 
-import com.cars.backend.entity.Owner;
+import com.cars.backend.dto.OwnerRequestDTO;
+import com.cars.backend.dto.OwnerResponseDTO;
 import com.cars.backend.service.OwnerService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,35 +22,26 @@ public class OwnerController {
 
     // ========== CREATE ==========
     @PostMapping
-    public ResponseEntity<?> postOwner(@Valid @RequestBody Owner owner) {
-        try {
-            Owner savedOwner = ownerService.postOwner(owner);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedOwner);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public ResponseEntity<OwnerResponseDTO> postOwner(@Valid @RequestBody OwnerRequestDTO owner) {
+        OwnerResponseDTO savedOwner = ownerService.postOwner(owner);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedOwner);
     }
 
     // ========== READ ==========
     @GetMapping
-    public List<Owner> getAllOwners() {
+    public List<OwnerResponseDTO> getAllOwners() {
         return ownerService.getAllOwners();
     }
 
     @GetMapping("/{id}")
-    public Owner getOwnerById(@PathVariable Long id) {
+    public OwnerResponseDTO getOwnerById(@PathVariable Long id) {
         return ownerService.getOwnerById(id);
     }
 
     // ========== UPDATE ==========
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateOwner(@PathVariable Long id, @Valid @RequestBody Owner owner) {
-        try {
-            Owner updated = ownerService.updateOwner(owner, id);
-            return ResponseEntity.ok(updated);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public OwnerResponseDTO updateOwner(@PathVariable Long id, @Valid @RequestBody OwnerRequestDTO owner) {
+        return ownerService.updateOwner(owner, id);
     }
 
     // ========== DELETE ==========
@@ -61,7 +53,7 @@ public class OwnerController {
 
     // ========== Available Owners ==========
     @GetMapping("/available")
-    public List<Owner> getAvailableOwners() {
+    public List<OwnerResponseDTO> getAvailableOwners() {
         return ownerService.getAvailableOwners();
     }
 }

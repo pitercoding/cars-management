@@ -20,14 +20,27 @@ export class CarService {
   }
 
   postCar(car: Car): Observable<Car> {
-    return this.http.post<Car>(`${this.apiUrl}`, car);
+    return this.http.post<Car>(`${this.apiUrl}`, this.toRequestPayload(car));
   }
 
   updateCar(id: number, car: Car): Observable<Car> {
-    return this.http.put<Car>(`${this.apiUrl}/${id}`, car);
+    return this.http.put<Car>(`${this.apiUrl}/${id}`, this.toRequestPayload(car));
   }
 
   deleteCar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  // The backend's CarRequestDTO expects ids for relations (brandId, ownerId,
+  // accessoryIds), not the full nested objects the forms bind to for display.
+  private toRequestPayload(car: Car) {
+    return {
+      name: car.name,
+      model: car.model,
+      manufactureYear: car.manufactureYear,
+      brandId: car.brand?.id ?? null,
+      ownerId: car.owner?.id ?? null,
+      accessoryIds: (car.accessories ?? []).map((a) => a.id),
+    };
   }
 }

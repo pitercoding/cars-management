@@ -1,22 +1,42 @@
 package com.cars.backend.service;
 
+import com.cars.backend.dto.AccessoryResponseDTO;
+import com.cars.backend.dto.BrandResponseDTO;
+import com.cars.backend.dto.CarRequestDTO;
+import com.cars.backend.dto.CarResponseDTO;
+import com.cars.backend.dto.OwnerResponseDTO;
+import com.cars.backend.entity.Accessory;
+import com.cars.backend.entity.Brand;
 import com.cars.backend.entity.Car;
+import com.cars.backend.entity.Owner;
 import com.cars.backend.exception.CarDeletionException;
+import com.cars.backend.repository.AccessoryRepository;
+import com.cars.backend.repository.BrandRepository;
 import com.cars.backend.repository.CarRepository;
+import com.cars.backend.repository.OwnerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CarService {
 
     private final CarRepository carRepository;
+    private final BrandRepository brandRepository;
+    private final OwnerRepository ownerRepository;
+    private final AccessoryRepository accessoryRepository;
 
-    public CarService(CarRepository carRepository) {
+    public CarService(CarRepository carRepository,
+                       BrandRepository brandRepository,
+                       OwnerRepository ownerRepository,
+                       AccessoryRepository accessoryRepository) {
         this.carRepository = carRepository;
+        this.brandRepository = brandRepository;
+        this.ownerRepository = ownerRepository;
+        this.accessoryRepository = accessoryRepository;
     }
-
 
     // ========== VALIDATION ========== //
     public boolean checkCarData(String name, int manufactureYear) {
@@ -32,53 +52,96 @@ public class CarService {
         return true;
     }
 
+    // ========== MAPPING HELPERS ========== //
+    private CarResponseDTO toResponseDTO(Car car) {
+        BrandResponseDTO brandDTO = new BrandResponseDTO(
+                car.getBrand().getId(), car.getBrand().getName(), car.getBrand().getTaxIdentificationNumber());
+
+        OwnerResponseDTO ownerDTO = null;
+        if (car.getOwner() != null) {
+            Owner owner = car.getOwner();
+            ownerDTO = new OwnerResponseDTO(
+                    owner.getId(), owner.getFullName(), owner.getDateOfBirth(), owner.getDriversLicense(), owner.getAge());
+        }
+
+        List<AccessoryResponseDTO> accessoryDTOs = car.getAccessories().stream()
+                .map(a -> new AccessoryResponseDTO(a.getId(), a.getName()))
+                .toList();
+
+        return new CarResponseDTO(
+                car.getId(), car.getName(), car.getModel(), car.getManufactureYear(),
+                brandDTO, ownerDTO, accessoryDTOs);
+    }
+
+    private Brand resolveBrand(Long brandId) {
+        return brandRepository.findById(brandId)
+                .orElseThrow(() -> new EntityNotFoundException("Brand not found with id: " + brandId));
+    }
+
+    private Owner resolveOwner(Long ownerId) {
+        if (ownerId == null) {
+            return null;
+        }
+        return ownerRepository.findById(ownerId)
+                .orElseThrow(() -> new EntityNotFoundException("Owner not found with id: " + ownerId));
+    }
+
+    private List<Accessory> resolveAccessories(List<Long> accessoryIds) {
+        // Must stay mutable: Hibernate calls .clear() on this collection when
+        // merging a detached entity, which fails against an immutable List.of().
+        if (accessoryIds == null || accessoryIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return new ArrayList<>(accessoryRepository.findAllById(accessoryIds));
+    }
+
     // ========== CREATE ========== //
-    public Car postCar(Car car) {
-        checkCarData(car.getName(), car.getManufactureYear());
+    public CarResponseDTO postCar(CarRequestDTO request) {
+        checkCarData(request.getName(), request.getManufactureYear());
 
-        if (car.getOwner() != null && car.getOwner().getId() == null) {
-            throw new IllegalArgumentException("Owner must already exist.");
-        }
+        Car car = new Car();
+        car.setName(request.getName());
+        car.setModel(request.getModel());
+        car.setManufactureYear(request.getManufactureYear());
+        car.setBrand(resolveBrand(request.getBrandId()));
+        car.setOwner(resolveOwner(request.getOwnerId()));
+        car.setAccessories(resolveAccessories(request.getAccessoryIds()));
 
-        if (car.getAccessories() != null && !car.getAccessories().isEmpty()) {
-            car.setAccessories(
-                    car.getAccessories().stream()
-                            .filter(a -> a.getId() != null)
-                            .toList()
-            );
-        }
-
-        return carRepository.save(car);
+        return toResponseDTO(carRepository.save(car));
     }
 
     // ========== READ ========== //
-    public List<Car> getAllCars() {
-        return carRepository.findAll();
+    public List<CarResponseDTO> getAllCars() {
+        return carRepository.findAll().stream().map(this::toResponseDTO).toList();
     }
 
-    public Car getCarById(Long id) {
+    public Car getCarEntityById(Long id) {
         return carRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Car not found with id: " + id));
     }
 
+    public CarResponseDTO getCarById(Long id) {
+        return toResponseDTO(getCarEntityById(id));
+    }
+
     // ========== UPDATE ========== //
-    public Car updateCar(Car car, Long id) {
-        checkCarData(car.getName(), car.getManufactureYear());
-        Car existing = getCarById(id);
+    public CarResponseDTO updateCar(CarRequestDTO request, Long id) {
+        checkCarData(request.getName(), request.getManufactureYear());
+        Car existing = getCarEntityById(id);
 
-        existing.setName(car.getName());
-        existing.setBrand(car.getBrand());
-        existing.setModel(car.getModel());
-        existing.setManufactureYear(car.getManufactureYear());
-        existing.setAccessories(car.getAccessories());
-        existing.setOwner(car.getOwner());
+        existing.setName(request.getName());
+        existing.setModel(request.getModel());
+        existing.setManufactureYear(request.getManufactureYear());
+        existing.setBrand(resolveBrand(request.getBrandId()));
+        existing.setOwner(resolveOwner(request.getOwnerId()));
+        existing.setAccessories(resolveAccessories(request.getAccessoryIds()));
 
-        return carRepository.save(existing);
+        return toResponseDTO(carRepository.save(existing));
     }
 
     // ========== DELETE ========== //
     public void deleteCar(Long id) {
-        Car existing = getCarById(id);
+        Car existing = getCarEntityById(id);
 
         if (existing.getOwner() != null || !existing.getAccessories().isEmpty()) {
             throw new CarDeletionException(
@@ -90,15 +153,15 @@ public class CarService {
     }
 
     // ========== AUTOMATICALLY DERIVED QUERIES ========== //
-    public List<Car> findByName(String name) {
-        return carRepository.findByName(name);
+    public List<CarResponseDTO> findByName(String name) {
+        return carRepository.findByName(name).stream().map(this::toResponseDTO).toList();
     }
 
-    public List<Car> findByBrandId(Long brandId) {
-        return carRepository.findByBrandId(brandId);
+    public List<CarResponseDTO> findByBrandId(Long brandId) {
+        return carRepository.findByBrandId(brandId).stream().map(this::toResponseDTO).toList();
     }
 
-    public List<Car> findByManufactureYearGreaterThan(int manufactureYear) {
-        return carRepository.findByManufactureYearGreaterThan(manufactureYear);
+    public List<CarResponseDTO> findByManufactureYearGreaterThan(int manufactureYear) {
+        return carRepository.findByManufactureYearGreaterThan(manufactureYear).stream().map(this::toResponseDTO).toList();
     }
 }

@@ -1,6 +1,7 @@
 package com.cars.backend.controller;
 
-import com.cars.backend.entity.Accessory;
+import com.cars.backend.dto.AccessoryRequestDTO;
+import com.cars.backend.dto.AccessoryResponseDTO;
 import com.cars.backend.service.AccessoryService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,37 +22,25 @@ public class AccessoryController {
 
     // ========== CREATE ==========
     @PostMapping
-    public ResponseEntity<?> postAccessory(@Valid @RequestBody Accessory accessory) {
-        try {
-            Accessory savedAccessory = accessoryService.postAccessory(accessory);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedAccessory);
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
-
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body("Accessory already exists.");
-        }
+    public ResponseEntity<AccessoryResponseDTO> postAccessory(@Valid @RequestBody AccessoryRequestDTO accessory) {
+        AccessoryResponseDTO savedAccessory = accessoryService.postAccessory(accessory);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAccessory);
     }
 
     // ========== READ ==========
     @GetMapping
-    public List<Accessory> getAllAccessories() {
+    public List<AccessoryResponseDTO> getAllAccessories() {
         return accessoryService.getAllAccessories();
     }
 
     @GetMapping("/{id}")
-    public Accessory getAccessoryById(@PathVariable Long id) {
+    public AccessoryResponseDTO getAccessoryById(@PathVariable Long id) {
         return accessoryService.getAccessoryById(id);
     }
 
     // ========== UPDATE ==========
     @PutMapping("/{id}")
-    public Accessory updateAccessory(@PathVariable Long id, @Valid @RequestBody Accessory accessory) {
+    public AccessoryResponseDTO updateAccessory(@PathVariable Long id, @Valid @RequestBody AccessoryRequestDTO accessory) {
         return accessoryService.updateAccessory(accessory, id);
     }
 
@@ -62,4 +51,3 @@ public class AccessoryController {
         return ResponseEntity.noContent().build();
     }
 }
-

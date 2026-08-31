@@ -1,6 +1,7 @@
 package com.cars.backend.controller;
 
-import com.cars.backend.entity.Car;
+import com.cars.backend.dto.CarRequestDTO;
+import com.cars.backend.dto.CarResponseDTO;
 import com.cars.backend.service.CarService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,46 +22,46 @@ public class CarController {
 
     // ========== CREATE ========== //
     @PostMapping
-    public ResponseEntity<Car> postCar(@Valid @RequestBody Car car) {
+    public ResponseEntity<CarResponseDTO> postCar(@Valid @RequestBody CarRequestDTO car) {
         return ResponseEntity.status(HttpStatus.CREATED).body(carService.postCar(car));
     }
 
     // ========== READ ========== //
     @GetMapping
-    public List<Car> getAllCars() {
+    public List<CarResponseDTO> getAllCars() {
         return carService.getAllCars();
     }
 
     // AUTOMATICALLY DERIVED QUERY
     @GetMapping("/findByName")
-    public ResponseEntity<List<Car>> findByName(@RequestParam String name) {
-        List<Car> carNameList = carService.findByName(name);
+    public ResponseEntity<List<CarResponseDTO>> findByName(@RequestParam String name) {
+        List<CarResponseDTO> carNameList = carService.findByName(name);
         return ResponseEntity.ok(carNameList);
     }
 
     // AUTOMATICALLY DERIVED QUERY
     @GetMapping("/findByBrand")
-    public ResponseEntity<List<Car>> findByBrandId(@RequestParam Long brandId) {
-        List<Car> carBrandList = carService.findByBrandId(brandId);
+    public ResponseEntity<List<CarResponseDTO>> findByBrandId(@RequestParam Long brandId) {
+        List<CarResponseDTO> carBrandList = carService.findByBrandId(brandId);
         return ResponseEntity.ok(carBrandList);
     }
 
     // AUTOMATICALLY DERIVED QUERY
     @GetMapping("/findByManufactureYearGreaterThan")
-    public ResponseEntity<List<Car>> findByManufactureYearGreaterThan(@RequestParam int manufactureYear) {
-        List<Car> carManufactureYear = carService.findByManufactureYearGreaterThan(manufactureYear);
+    public ResponseEntity<List<CarResponseDTO>> findByManufactureYearGreaterThan(@RequestParam int manufactureYear) {
+        List<CarResponseDTO> carManufactureYear = carService.findByManufactureYearGreaterThan(manufactureYear);
         return ResponseEntity.ok(carManufactureYear);
     }
 
     // ========== READ by ID ========== //
     @GetMapping("/{id}")
-    public Car getCarById(@PathVariable Long id) {
+    public CarResponseDTO getCarById(@PathVariable Long id) {
         return carService.getCarById(id);
     }
 
     // ========== UPDATE ========== //
     @PutMapping("/{id}")
-    public Car updateCar(@PathVariable Long id, @Valid @RequestBody Car car) {
+    public CarResponseDTO updateCar(@PathVariable Long id, @Valid @RequestBody CarRequestDTO car) {
         return carService.updateCar(car, id);
     }
 
@@ -72,4 +73,3 @@ public class CarController {
     }
 
 }
-

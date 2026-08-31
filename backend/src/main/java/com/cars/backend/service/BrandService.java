@@ -1,5 +1,7 @@
 package com.cars.backend.service;
 
+import com.cars.backend.dto.BrandRequestDTO;
+import com.cars.backend.dto.BrandResponseDTO;
 import com.cars.backend.entity.Brand;
 import com.cars.backend.repository.BrandRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,38 +29,54 @@ public class BrandService {
         }
     }
 
-    // ========== CREATE ==========
-    public Brand postBrand(Brand brand) {
-        checkBrandData(brand.getName(), brand.getTaxIdentificationNumber());
-        return brandRepository.save(brand);
+    private BrandResponseDTO toResponseDTO(Brand brand) {
+        return new BrandResponseDTO(brand.getId(), brand.getName(), brand.getTaxIdentificationNumber());
     }
 
-    // ========== READ ==========
-    public List<Brand> getAllBrands() {
-        return brandRepository.findAll();
-    }
-
-    public Brand getBrandById(Long id) {
+    private Brand getBrandEntityById(Long id) {
         return brandRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Brand not found with id: " + id
                 ));
     }
 
+    // ========== CREATE ==========
+    public BrandResponseDTO postBrand(BrandRequestDTO request) {
+        checkBrandData(request.getName(), request.getTaxIdentificationNumber());
+
+        Brand brand = new Brand();
+        brand.setName(request.getName());
+        brand.setTaxIdentificationNumber(request.getTaxIdentificationNumber());
+
+        return toResponseDTO(brandRepository.save(brand));
+    }
+
+    // ========== READ ==========
+    public List<BrandResponseDTO> getAllBrands() {
+        return brandRepository.findAll()
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
+    }
+
+    public BrandResponseDTO getBrandById(Long id) {
+        return toResponseDTO(getBrandEntityById(id));
+    }
+
     // ========== UPDATE ==========
-    public Brand updateBrand(Brand brand, Long id) {
-        checkBrandData(brand.getName(), brand.getTaxIdentificationNumber());
+    public BrandResponseDTO updateBrand(BrandRequestDTO request, Long id) {
+        checkBrandData(request.getName(), request.getTaxIdentificationNumber());
 
-        Brand existing = getBrandById(id);
-        existing.setName(brand.getName());
-        existing.setTaxIdentificationNumber(brand.getTaxIdentificationNumber());
+        Brand existing = getBrandEntityById(id);
+        existing.setName(request.getName());
+        existing.setTaxIdentificationNumber(request.getTaxIdentificationNumber());
 
-        return brandRepository.save(existing);
+        return toResponseDTO(brandRepository.save(existing));
     }
 
     // ========== DELETE ==========
     public void deleteBrand(Long id) {
-        Brand existing = getBrandById(id);
+        Brand existing = getBrandEntityById(id);
         brandRepository.delete(existing);
     }
 }

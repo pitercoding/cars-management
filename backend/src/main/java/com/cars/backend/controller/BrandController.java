@@ -1,6 +1,7 @@
 package com.cars.backend.controller;
 
-import com.cars.backend.entity.Brand;
+import com.cars.backend.dto.BrandRequestDTO;
+import com.cars.backend.dto.BrandResponseDTO;
 import com.cars.backend.service.BrandService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,25 +22,25 @@ public class BrandController {
 
     // ========== CREATE ==========
     @PostMapping
-    public ResponseEntity<Brand> postBrand(@Valid @RequestBody Brand brand) {
-        Brand savedBrand = brandService.postBrand(brand);
+    public ResponseEntity<BrandResponseDTO> postBrand(@Valid @RequestBody BrandRequestDTO brand) {
+        BrandResponseDTO savedBrand = brandService.postBrand(brand);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedBrand);
     }
 
     // ========== READ ==========
     @GetMapping
-    public List<Brand> getAllBrands() {
+    public List<BrandResponseDTO> getAllBrands() {
         return brandService.getAllBrands();
     }
 
     @GetMapping("/{id}")
-    public Brand getBrandById(@PathVariable Long id) {
+    public BrandResponseDTO getBrandById(@PathVariable Long id) {
         return brandService.getBrandById(id);
     }
 
     // ========== UPDATE ==========
     @PutMapping("/{id}")
-    public Brand updateBrand(@PathVariable Long id, @Valid @RequestBody Brand brand) {
+    public BrandResponseDTO updateBrand(@PathVariable Long id, @Valid @RequestBody BrandRequestDTO brand) {
         return brandService.updateBrand(brand, id);
     }
 
@@ -50,4 +51,3 @@ public class BrandController {
         return ResponseEntity.noContent().build();
     }
 }
-
