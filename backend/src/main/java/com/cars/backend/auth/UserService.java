@@ -27,6 +27,15 @@ public class UserService {
                 );
     }
 
+    private UserResponseDTO toResponseDTO(User user) {
+        return new UserResponseDTO(
+                user.getId(),
+                user.getFullName(),
+                user.getUsername(),
+                user.getRole()
+        );
+    }
+
     private void validateCreate(User user) {
 
         if (user.getFullName() == null || user.getFullName().isBlank()) {
@@ -69,13 +78,13 @@ public class UserService {
     // CREATE
     // =========================
 
-    public User postUser(User user) {
+    public UserResponseDTO postUser(User user) {
 
         validateCreate(user);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        return userRepository.save(user);
+        return toResponseDTO(userRepository.save(user));
     }
 
     // =========================
@@ -86,32 +95,19 @@ public class UserService {
 
         return userRepository.findAll()
                 .stream()
-                .map(u -> new UserResponseDTO(
-                        u.getId(),
-                        u.getFullName(),
-                        u.getUsername(),
-                        u.getRole()
-                ))
+                .map(this::toResponseDTO)
                 .toList();
     }
 
     public UserResponseDTO getUserById(Long id) {
-
-        User u = getUserEntityById(id);
-
-        return new UserResponseDTO(
-                u.getId(),
-                u.getFullName(),
-                u.getUsername(),
-                u.getRole()
-        );
+        return toResponseDTO(getUserEntityById(id));
     }
 
     // =========================
     // UPDATE
     // =========================
 
-    public User updateUser(User user, Long id) {
+    public UserResponseDTO updateUser(User user, Long id) {
 
         validateUpdate(user);
 
@@ -125,7 +121,7 @@ public class UserService {
             existing.setPassword(passwordEncoder.encode(user.getPassword()));
         }
 
-        return userRepository.save(existing);
+        return toResponseDTO(userRepository.save(existing));
     }
 
     // =========================
