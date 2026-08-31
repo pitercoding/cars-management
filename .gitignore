@@ -1,15 +1,17 @@
 # Backend (Java / Maven)
 backend/target/
-backend/.idea/
-backend/*.iml
 *.class
 
 # Frontend (Angular / Node)
 frontend/node_modules/
 frontend/dist/
 frontend/.angular/
-frontend/.vscode/
 frontend/package-lock.json
+
+# IDE
+.idea/
+*.iml
+.vscode/
 
 # Sistema
 .DS_Store
