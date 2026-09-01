@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { LoginService } from '../../../auth/services/login.service';
@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
   selector: 'app-menu',
   imports: [MdbCollapseModule, RouterModule, RouterLink],
   templateUrl: './menu.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './menu.scss',
 })
 export class Menu {

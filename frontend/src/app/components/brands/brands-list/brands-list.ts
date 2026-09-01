@@ -1,4 +1,4 @@
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 import Swal from 'sweetalert2';
 
@@ -22,6 +22,7 @@ import { BrandService } from '../../../services/brand.service';
     BrandsDetails
 ],
   templateUrl: './brands-list.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './brands-list.scss',
 })
 export class BrandsList {

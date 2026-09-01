@@ -9,6 +9,7 @@ import {
   OnChanges,
   SimpleChanges,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
@@ -27,6 +28,7 @@ import { Owner } from '../../../models/owner';
   standalone: true,
   imports: [MdbFormsModule, FormsModule],
   templateUrl: './cars-details.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./cars-details.scss'],
 })
 export class CarsDetails implements OnInit, OnChanges {

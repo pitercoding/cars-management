@@ -1,5 +1,5 @@
 import { AccessoryService } from '../../../services/accessory.service';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Accessory } from '../../../models/accessory';
@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [MdbFormsModule, FormsModule],
   templateUrl: './accessories-details.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './accessories-details.scss',
 })
 export class AccessoriesDetails {

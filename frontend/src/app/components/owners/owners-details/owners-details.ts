@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Owner } from '../../../models/owner';
@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [MdbFormsModule, FormsModule],
   templateUrl: './owners-details.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './owners-details.scss',
 })
 export class OwnersDetails {

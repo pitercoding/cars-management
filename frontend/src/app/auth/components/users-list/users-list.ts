@@ -1,5 +1,5 @@
 
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbModalModule, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
     UsersDetails
 ],
   templateUrl: './users-list.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./users-list.scss'],
 })
 export class UsersList {

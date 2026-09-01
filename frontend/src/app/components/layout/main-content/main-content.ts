@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Menu } from '../menu/menu';
 
@@ -6,6 +6,7 @@ import { Menu } from '../menu/menu';
   selector: 'app-main-content',
   imports: [Menu, RouterOutlet],
   templateUrl: './main-content.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './main-content.scss',
 })
 export class MainContent {

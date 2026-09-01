@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbModalModule, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
@@ -21,6 +21,7 @@ import Swal from 'sweetalert2';
     OwnersDetails
   ],
   templateUrl: './owners-list.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './owners-list.scss',
 })
 export class OwnersList {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import Swal from 'sweetalert2';
@@ -11,6 +11,7 @@ import { BrandService } from '../../../services/brand.service';
   standalone: true,
   imports: [MdbFormsModule, FormsModule],
   templateUrl: './brands-details.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './brands-details.scss',
 })
 export class BrandsDetails {
