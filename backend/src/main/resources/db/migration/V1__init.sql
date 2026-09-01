@@ -56,6 +56,7 @@ CREATE TABLE `car` (
 CREATE TABLE `car_accessory` (
   `car_id` bigint NOT NULL,
   `accessory_id` bigint NOT NULL,
+  PRIMARY KEY (`car_id`, `accessory_id`),
   KEY `FKgjjf4hn6utmae40pa8vgcqu1d` (`accessory_id`),
   KEY `FKgqpmd4dp4q2562wg1hwnon823` (`car_id`),
   CONSTRAINT `FKgjjf4hn6utmae40pa8vgcqu1d` FOREIGN KEY (`accessory_id`) REFERENCES `accessory` (`id`),
