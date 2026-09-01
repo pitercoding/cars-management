@@ -18,14 +18,14 @@ import { Car } from '../../../models/car';
 import { Brand } from '../../../models/brand';
 import { CarService } from '../../../services/car.service';
 import { BrandService } from '../../../services/brand.service';
-import { CommonModule } from '@angular/common';
+
 import { Accessory } from '../../../models/accessory';
 import { Owner } from '../../../models/owner';
 
 @Component({
   selector: 'app-cars-details',
   standalone: true,
-  imports: [CommonModule, MdbFormsModule, FormsModule],
+  imports: [MdbFormsModule, FormsModule],
   templateUrl: './cars-details.html',
   styleUrls: ['./cars-details.scss'],
 })

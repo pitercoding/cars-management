@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbModalModule, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
@@ -13,13 +13,12 @@ import Swal from 'sweetalert2';
   selector: 'app-accessories-list',
   standalone: true,
   imports: [
-    CommonModule,
     MdbRippleModule,
     MdbModalModule,
     MdbFormsModule,
     MdbValidationModule,
-    AccessoriesDetails,
-  ],
+    AccessoriesDetails
+],
   templateUrl: './accessories-list.html',
   styleUrl: './accessories-list.scss',
 })

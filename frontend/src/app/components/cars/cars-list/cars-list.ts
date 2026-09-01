@@ -1,5 +1,5 @@
 import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import Swal from 'sweetalert2';
 
 import { MdbModalModule, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
@@ -15,13 +15,12 @@ import { CarService } from '../../../services/car.service';
   selector: 'app-cars-list',
   standalone: true,
   imports: [
-    CommonModule,
     MdbRippleModule,
     MdbModalModule,
     MdbFormsModule,
     MdbValidationModule,
-    CarsDetails,
-  ],
+    CarsDetails
+],
   templateUrl: './cars-list.html',
   styleUrls: ['./cars-list.scss'],
 })

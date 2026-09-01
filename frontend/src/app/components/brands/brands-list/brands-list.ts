@@ -1,5 +1,5 @@
 import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import Swal from 'sweetalert2';
 
 import { MdbModalModule, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
@@ -15,13 +15,12 @@ import { BrandService } from '../../../services/brand.service';
   selector: 'app-brands-list',
   standalone: true,
   imports: [
-    CommonModule,
     MdbRippleModule,
     MdbModalModule,
     MdbFormsModule,
     MdbValidationModule,
-    BrandsDetails,
-  ],
+    BrandsDetails
+],
   templateUrl: './brands-list.html',
   styleUrl: './brands-list.scss',
 })

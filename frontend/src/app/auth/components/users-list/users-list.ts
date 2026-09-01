@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbModalModule, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
@@ -15,13 +15,12 @@ import { Router } from '@angular/router';
   selector: 'app-users-list',
   standalone: true,
   imports: [
-    CommonModule,
     MdbRippleModule,
     MdbModalModule,
     MdbFormsModule,
     MdbValidationModule,
-    UsersDetails,
-  ],
+    UsersDetails
+],
   templateUrl: './users-list.html',
   styleUrls: ['./users-list.scss'],
 })
