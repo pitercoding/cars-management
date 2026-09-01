@@ -58,4 +58,6 @@ export const routes: Routes = [
       { path: 'owners/edit/:id', component: OwnersDetails },
     ],
   },
+
+  { path: '**', redirectTo: 'login' },
 ];
