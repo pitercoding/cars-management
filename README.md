@@ -1,8 +1,8 @@
 # Cars Management
 
-**Cars Management** is a full-stack application designed to manage car sales, brands, accessories, and owners. Users can perform CRUD operations on cars, brands, owners, and accessories, with secure authentication and role-based permissions for admins.  
+**Cars Management** is a full-stack application for managing car sales, brands, accessories, and owners. Users can perform CRUD operations on cars, brands, owners, and accessories, with JWT-based authentication and role-based permissions for admins.
 
-The application also includes **robust validation**, **centralized error handling**, and dynamic **frontend-backend integration**.
+The application includes **DTO-based request/response contracts**, **database migrations with Flyway**, **centralized error handling**, **robust validation**, and a **CI pipeline** that builds and tests both the backend and frontend on every push.
 
 ## How to Access the Project
 
@@ -22,7 +22,7 @@ git clone https://github.com/pitercoding/cars-management.git
 cd cars-management
 ```
 
-1. Backend:
+1. Backend (requires a running MySQL instance; schema is created automatically by Flyway on startup):
 
 ```cmd
 cd backend
@@ -39,7 +39,7 @@ cd backend
 ./mvnw spring-boot:run
 ```
 
-1. Frontend:
+1. Frontend (copy `src/environments/environment.example.ts` to `environment.development.ts` and point `SERVER` at your backend):
 
 ```bash
 cd frontend
@@ -57,23 +57,24 @@ It allowed me to apply concepts in **Spring Boot, Angular, REST APIs, authentica
 
 During development, I strengthened skills in:
 
-- **Frontend:** Angular, TypeScript, SCSS, MDB Angular UI Kit, routing, HTTP interceptors.
-- **Backend:** Spring Boot, Spring Security, JWT authentication, centralized exception handling.
-- **Database:** MySQL, repository design, relationships.
-- **Deployment & Cloud:** Experience deploying to AWS, then using Render (backend), Vercel (frontend), and Aiven (MySQL) for the final free-tier setup.
-- **Testing & Validation:** Unit tests, code coverage with JaCoCo, frontend form validations.
+- **Frontend:** Angular (standalone components, the esbuild-based application builder), TypeScript, SCSS, MDB Angular UI Kit, routing, functional HTTP interceptors and route guards.
+- **Backend:** Spring Boot, Spring Security, JWT authentication, DTO-based API contracts, Flyway migrations, centralized exception handling, constructor-based dependency injection.
+- **Database:** MySQL, versioned schema migrations, JPA relationships.
+- **Deployment & Cloud:** Experience deploying to AWS, then using Render (backend, via Docker), Vercel (frontend), and Aiven (MySQL) for the final free-tier setup.
+- **Testing, Validation & CI:** Unit tests with JUnit/Mockito, code coverage with JaCoCo, frontend Jasmine/Karma specs, GitHub Actions pipeline running both suites on every push/PR.
 
 ---
 
 ## Application Structure
 
-| Layer      | Technology              | Main Function                                                              |
-| ---------- | ----------------------- | -------------------------------------------------------------------------- |
-| Frontend   | Angular + TypeScript    | UI for managing cars, brands, owners, accessories with forms and lists     |
-| Backend    | Spring Boot             | REST API with logging, authentication, validation, and exception handling  |
-| Database   | SQL                     | Stores cars, owners, brands, accessories                                   |
-| Auth       | JWT + Spring Security   | Secure login, admin role management, password change                       |
-| Deployment | Render / Vercel / Aiven | Cloud deployment and hosting                                               |
+| Layer      | Technology                         | Main Function                                                               |
+| ---------- | ---------------------------------- | --------------------------------------------------------------------------- |
+| Frontend   | Angular 22 + TypeScript            | UI for managing cars, brands, owners, accessories with forms and lists      |
+| Backend    | Spring Boot 4                      | REST API with DTOs, logging, authentication, validation, exception handling |
+| Database   | MySQL + Flyway                     | Stores cars, owners, brands, accessories; schema managed by migrations      |
+| Auth       | JWT + Spring Security              | Secure login, admin role management, password change                        |
+| CI/CD      | GitHub Actions                     | Automated build + test for backend and frontend on push/PR                  |
+| Deployment | Render (Docker) / Vercel / Aiven   | Cloud deployment and hosting                                                |
 
 ---
 
@@ -81,37 +82,55 @@ During development, I strengthened skills in:
 
 ### Frontend (Angular)
 
-- Angular 15+  
-- MDB Angular UI Kit  
-- SCSS / CSS3  
-- HTTP Client / Interceptor  
-- Routing & Guards  
-- Components for Cars, Owners, Brands, Accessories  
+- Angular 22 (standalone components, esbuild/Vite-based `application` builder)
+- MDB Angular UI Kit + Font Awesome icons
+- SweetAlert2 for alerts, confirmations, and modals
+- Chart.js for data visualization
+- SCSS / CSS3, mobile-first responsive layout
+- Functional HTTP interceptor (JWT attachment, 401/403 handling)
+- Route guards (`authGuard`, `adminGuard`, `loginGuard`)
+- Components for Cars, Owners, Brands, Accessories, Users
+- Karma + Jasmine unit tests
 
 ### Backend (Spring Boot)
 
-- Spring Boot 3+  
-- Spring Security + JWT  
-- REST APIs (Cars, Brands, Owners, Accessories)  
-- Centralized exception handling  
-- Validation and logging  
-- Repositories and Service layers with business rules  
+- Spring Boot 4.0.8 on Java 21
+- Spring Security + JWT (jjwt 0.13.0)
+- REST APIs (Cars, Brands, Owners, Accessories, Users) built around dedicated request/response DTOs
+- Flyway-managed schema migrations (`db/migration`)
+- Centralized exception handling (`GlobalExceptionHandler`) with standardized `ErrorResponse` payloads and a custom `CarDeletionException`
+- Bean Validation and constructor-injected service/repository layers
+- Public `/health` endpoint for uptime checks
+- JUnit 5 / Mockito unit tests with JaCoCo coverage reporting
 
 ### Database
 
-- MySQL  
-- Entity relationships: Many-to-Many (Cars ↔ Accessories), One-to-Many (Owner ↔ Cars, Brand ↔ Cars)  
+- MySQL, schema versioned via Flyway migrations
+- Entity relationships: Many-to-Many (Cars ↔ Accessories), One-to-Many (Brand → Cars), One-to-One (Owner ↔ Car)
 
-### Deployment
+### CI/CD & Deployment
 
-- Backend deployed on Render  
-- Frontend deployed on Vercel  
-- Database hosted on Aiven MySQL (free tier)  
+- GitHub Actions pipeline: backend build+test against a throwaway MySQL service container; frontend `npm ci` + build + headless Karma tests
+- Backend containerized with a multi-stage Dockerfile, deployed on Render
+- Frontend deployed on Vercel
+- Database hosted on Aiven MySQL (free tier)
 - Initial deployment practice on AWS (later replaced to avoid costs)
 
 ---
 
 ## Screenshots & Visuals
+
+### Login
+
+![Login Page](frontend/src/assets/screenshots/login.png)
+
+### Brands Management
+
+![Brands Management](frontend/src/assets/screenshots/brands-list.png)
+
+### Accessories Management
+
+![Accessories Management](frontend/src/assets/screenshots/accessories-list.png)
 
 ### Cars List
 
@@ -121,14 +140,8 @@ During development, I strengthened skills in:
 
 ![Car Details](frontend/src/assets/screenshots/cars-details.png)
 
-### Brands & Accessories Management
+### User Management
 
-![Brands Management](frontend/src/assets/screenshots/brands-list.png)  
-![Accessories Management](frontend/src/assets/screenshots/accessories-list.png)
-
-### Authentication & User Management
-
-![Login Page](frontend/src/assets/screenshots/login.png)  
 ![User Management](frontend/src/assets/screenshots/users-list.png)
 
 ---
@@ -136,25 +149,40 @@ During development, I strengthened skills in:
 ## Application Flow
 
 ```text
-User → Frontend (Angular)
+User → Frontend (Angular, standalone components + guards)
 ↓
-REST API (Spring Boot, JWT, Validation, Logs)
+REST API (Spring Boot, JWT filter, DTO validation, centralized error handling, logs)
 ↓
-Database (SQL)
+Database (MySQL, schema versioned by Flyway)
 ↑
-(Backend processes requests and returns results)
+(Backend maps entities to DTOs and returns results)
 ```
+
+## Main API Endpoints
+
+All endpoints below (except `/api/login` and `/health`) require a valid JWT in the `Authorization: Bearer <token>` header. User management endpoints additionally require the `ADMIN` role.
+
+| Resource   | Base path          | Endpoints                                                                                                                                   |
+| ---------- | ------------------ | ---------------------------------------------------------------------------------------------                                               |
+| Cars       | `/api/cars`        | `POST /`, `GET /`, `GET /{id}`, `PUT /{id}`, `DELETE /{id}`, `GET /findByName`, `GET /findByBrand`, `GET /findByManufactureYearGreaterThan` |
+| Brands     | `/api/brands`      | `POST /`, `GET /`, `GET /{id}`, `PUT /{id}`, `DELETE /{id}`                                                                                 |
+| Owners     | `/api/owners`      | `POST /`, `GET /`, `GET /{id}`, `PUT /{id}`, `DELETE /{id}`, `GET /available`                                                               |
+| Accessories| `/api/accessories` | `POST /`, `GET /`, `GET /{id}`, `PUT /{id}`, `DELETE /{id}`                                                                                 |
+| Users      | `/api/users`       | `POST /`, `GET /`, `GET /{id}`, `PUT /{id}`, `DELETE /{id}` (admin only), `PUT /me/password` (any authenticated user)                       |
+| Auth       | `/api/login`       | `POST /` (public, returns a JWT)                                                                                                            |
+| Health     | `/health`          | `GET /` (public)                                                                                                                            |
 
 ## Current Status
 
-| Area           | Status         | Description                                                                      |
-| -------------- | -------------- | -------------------------------------------------------------------------------- |
-| Backend        | ✅ Completed   | CRUD, validation, auth, exception handling                                       |
-| Frontend       | ✅ Completed   | Full management UI for cars, brands, owners, accessories                         |
-| Integration    | ✅ Tested      | Frontend ↔ Backend communication via HTTP                                        |
-| Database       | ✅ Operational | Connected and synchronized                                                       |
-| Authentication | ✅ Implemented | JWT + Role-based UI + Password change                                            |
-| Deployment     | ✅ Done        | Backend → Render, Frontend → Vercel, Database → Aiven, AWS deployment experience |
+| Area           | Status         | Description                                                                                         |
+| -------------- | -------------- | ------------------------------------------------------------------------------------------------    |
+| Backend        | ✅ Completed   | CRUD via DTOs, Flyway migrations, validation, JWT auth, centralized exception handling              |
+| Frontend       | ✅ Completed   | Full management UI for cars, brands, owners, accessories, users (Angular 22, standalone components) |
+| Integration    | ✅ Tested      | Frontend ↔ Backend communication via HTTP + JWT interceptor                                         |
+| Database       | ✅ Operational | Connected and schema-versioned via Flyway                                                           |
+| Authentication | ✅ Implemented | JWT + role-based UI/route guards + self-service password change                                     |
+| CI/CD          | ✅ Implemented | GitHub Actions builds and tests backend + frontend on every push/PR                                 |
+| Deployment     | ✅ Done        | Backend → Render (Docker), Frontend → Vercel, Database → Aiven, AWS deployment experience           |
 
 ## Folder Structure
 
@@ -163,27 +191,29 @@ cars-management/
 ├─ backend/
 │  ├─ src/main/java/com/cars/backend/
 │  │  ├─ auth/                  # Authentication module (login, users, DTOs)
-│  │  ├─ config/                # Security, CORS, JWT filters
-│  │  ├─ controller/            # REST controllers
-│  │  ├─ dto/                   # Data Transfer Objects
-│  │  ├─ entity/                # JPA Entities
-│  │  ├─ exception/             # Custom exceptions and handlers
+│  │  ├─ config/                # Security, CORS, JWT filter/generator
+│  │  ├─ controller/            # REST controllers (cars, brands, owners, accessories, health)
+│  │  ├─ dto/                   # Request/response DTOs + ErrorResponse
+│  │  ├─ entity/                # JPA entities (Car, Brand, Owner, Accessory)
+│  │  ├─ exception/             # GlobalExceptionHandler and custom exceptions
 │  │  ├─ repository/            # Spring Data JPA repositories
-│  │  ├─ service/               # Business logic services
+│  │  ├─ service/                # Business logic services
 │  │  └─ BackendApplication.java
+│  ├─ src/main/resources/db/migration/  # Flyway schema migrations
+│  └─ Dockerfile
 ├─ frontend/
 │  ├─ src/app/
-│  │  ├─ auth/                  # Authentication components & services
-│  │  ├─ components/            # CRUD components (cars, brands, owners, accessories)
+│  │  ├─ auth/                  # Login/user models, guards, interceptor, auth services
+│  │  ├─ components/            # CRUD components (cars, brands, owners, accessories, layout/menu)
 │  │  ├─ models/                # TypeScript models
-│  │  ├─ services/              # HTTP services
+│  │  ├─ services/               # HTTP services
 │  │  ├─ app.routes.ts          # Routing configuration
 │  │  └─ app.ts/html/scss       # Main app files
-│  ├─ assets/images/            # Logo and other static files
-│  └─ environments/             # Environment configs (dev/prod)
+│  ├─ src/assets/                # Logo, screenshots and other static files
+│  └─ src/environments/          # Environment configs (dev/prod, gitignored; see environment.example.ts)
+├─ .github/workflows/ci.yml     # CI pipeline (backend + frontend build/test)
 ├─ .gitignore
-├─ README.md
-└─ LICENSE
+└─ README.md
 ```
 
 ## License
